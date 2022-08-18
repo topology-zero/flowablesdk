@@ -1,2 +1,3 @@
 # flowable-go-client
-使用REST方式创建 flowable 工作流,使用 GO 语言实现
+
+GO 语言操作 flowable 工作流的 SDK
