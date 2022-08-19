@@ -1,4 +1,4 @@
-package process
+package process_definition
 
 import (
 	"encoding/json"
@@ -6,13 +6,29 @@ import (
 	"strconv"
 
 	"github.com/MasterJoyHunan/flowablesdk"
+	"github.com/MasterJoyHunan/flowablesdk/candidate"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
 )
 
-type Process struct{}
+type Process struct {
+	Id                       string `json:"id"`
+	Url                      string `json:"url"`
+	Version                  int    `json:"version"`
+	Key                      string `json:"key"`
+	Category                 string `json:"category"`
+	Suspended                bool   `json:"suspended"`
+	Name                     string `json:"name"`
+	Description              string `json:"description"`
+	DeploymentId             string `json:"deploymentId"`
+	DeploymentUrl            string `json:"deploymentUrl"`
+	GraphicalNotationDefined bool   `json:"graphicalNotationDefined"`
+	Resource                 string `json:"resource"`
+	DiagramResource          string `json:"diagramResource"`
+	StartFormDefined         bool   `json:"startFormDefined"`
+}
 
 // List 获取流程列表
-func (p *Process) List(req ListRequest) (resp ListResponse, err error) {
+func (p Process) List(req ListRequest) (resp ListResponse, err error) {
 	query := make(map[string]string)
 
 	if req.Version > 0 {
@@ -69,7 +85,7 @@ func (p *Process) List(req ListRequest) (resp ListResponse, err error) {
 }
 
 // Detail 获取流程详情
-func (p *Process) Detail(deploymentId string) (resp Detail, err error) {
+func (p Process) Detail(deploymentId string) (resp Process, err error) {
 	request := flowablesdk.GetRequest(DetailApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -81,7 +97,7 @@ func (p *Process) Detail(deploymentId string) (resp Detail, err error) {
 }
 
 // Update 更新流程
-func (p *Process) Update(deploymentId string, req UpdateRequest) (resp Detail, err error) {
+func (p Process) Update(deploymentId string, req UpdateRequest) (resp Process, err error) {
 	request := flowablesdk.GetRequest(UpdateApi, deploymentId)
 
 	query := map[string]any{}
@@ -123,7 +139,7 @@ func (p *Process) Update(deploymentId string, req UpdateRequest) (resp Detail, e
 }
 
 // ResourceContent 获取流程的xml
-func (p *Process) ResourceContent(deploymentId string) (resp string, err error) {
+func (p Process) ResourceContent(deploymentId string) (resp string, err error) {
 	request := flowablesdk.GetRequest(ResourceContentApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -133,7 +149,7 @@ func (p *Process) ResourceContent(deploymentId string) (resp string, err error) 
 }
 
 // Model 获取流程的 BPMN model
-func (p *Process) Model(deploymentId string) (resp map[string]any, err error) {
+func (p Process) Model(deploymentId string) (resp map[string]any, err error) {
 	request := flowablesdk.GetRequest(ModelApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -143,9 +159,9 @@ func (p *Process) Model(deploymentId string) (resp map[string]any, err error) {
 	return
 }
 
-// ProcessCandidate 获取流程所有候选人
-func (p *Process) ProcessCandidate(deploymentId string) (resp []Candidate, err error) {
-	request := flowablesdk.GetRequest(ProcessCandidateApi, deploymentId)
+// ListCandidate 获取流程所有候选人
+func (p Process) ListCandidate(deploymentId string) (resp []candidate.Candidate, err error) {
+	request := flowablesdk.GetRequest(ListCandidateApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
 		return
@@ -154,9 +170,9 @@ func (p *Process) ProcessCandidate(deploymentId string) (resp []Candidate, err e
 	return
 }
 
-// ProcessAddCandidate 流程添加候选人 TODO 需要查找为什么 group 不能使用的问题
-func (p *Process) ProcessAddCandidate(deploymentId string, req ProcessAddCandidateRequest) (resp Candidate, err error) {
-	request := flowablesdk.GetRequest(ProcessAddCandidateApi, deploymentId)
+// AddCandidate 流程添加候选人 TODO 需要查找为什么 group 不能使用的问题
+func (p Process) AddCandidate(deploymentId string, req AddCandidateRequest) (resp candidate.Candidate, err error) {
+	request := flowablesdk.GetRequest(AddCandidateApi, deploymentId)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -166,13 +182,13 @@ func (p *Process) ProcessAddCandidate(deploymentId string, req ProcessAddCandida
 	return
 }
 
-// ProcessDeleteCandidate 流程删除候选人
-func (p *Process) ProcessDeleteCandidate(deploymentId string, req ProcessDeleteCandidateRequest) error {
+// DeleteCandidate 流程删除候选人
+func (p Process) DeleteCandidate(deploymentId string, req DeleteCandidateRequest) error {
 	if len(req.Family) == 0 {
 		return errors.New("family is empty")
 	}
 
-	if len(req.IdentityId) == 0 {
+	if len(req.CandidateId) == 0 {
 		return errors.New("identityId is empty")
 	}
 
@@ -180,7 +196,7 @@ func (p *Process) ProcessDeleteCandidate(deploymentId string, req ProcessDeleteC
 		return errors.New("family only allow users or groups")
 	}
 
-	request := flowablesdk.GetRequest(ProcessDeleteCandidateApi, deploymentId, req.Family, req.IdentityId)
+	request := flowablesdk.GetRequest(DeleteCandidateApi, deploymentId, req.Family, req.CandidateId)
 	_, err := request.DoHttpRequest()
 	if err != nil {
 		return err
@@ -188,13 +204,14 @@ func (p *Process) ProcessDeleteCandidate(deploymentId string, req ProcessDeleteC
 	return nil
 }
 
-func (p *Process) CandidateProcess(deploymentId string, req ProcessDeleteCandidateRequest) (resp Candidate, err error) {
+// CandidateDetail 查看流程指定候选人
+func (p Process) CandidateDetail(deploymentId string, req DeleteCandidateRequest) (resp candidate.Candidate, err error) {
 	if len(req.Family) == 0 {
 		err = errors.New("family is empty")
 		return
 	}
 
-	if len(req.IdentityId) == 0 {
+	if len(req.CandidateId) == 0 {
 		err = errors.New("identityId is empty")
 		return
 	}
@@ -204,7 +221,7 @@ func (p *Process) CandidateProcess(deploymentId string, req ProcessDeleteCandida
 		return
 	}
 
-	request := flowablesdk.GetRequest(CandidateProcessApi, deploymentId, req.Family, req.IdentityId)
+	request := flowablesdk.GetRequest(CandidateDetailApi, deploymentId, req.Family, req.CandidateId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
 		return

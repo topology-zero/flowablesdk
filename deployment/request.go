@@ -7,6 +7,6 @@ type ListRequest struct {
 }
 
 type CreateRequest struct {
-	FileName string
+	FileName string // must end by .bpmn20.xml
 	Xml      string
 }

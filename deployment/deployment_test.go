@@ -17,6 +17,8 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
+const id = "76961003-1f64-11ed-a343-0242ac140002"
+
 // 获取列表
 func TestDeployment_List(t *testing.T) {
 	var d Deployment
@@ -32,7 +34,7 @@ func TestDeployment_List(t *testing.T) {
 // 获取详情
 func TestDeployment_Detail(t *testing.T) {
 	var d Deployment
-	data, err := d.Detail("4343f14b-1ddc-11ed-b722-f85ea0b3f3f9-x")
+	data, err := d.Detail(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -41,11 +43,11 @@ func TestDeployment_Detail(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-// 获取详情
+// 获取
 func TestDeployment_Create(t *testing.T) {
 	var d Deployment
 	req := CreateRequest{
-		FileName: "TestDeployment_Create",
+		FileName: "TestDeployment_Create.bpmn20.xml",
 		Xml:      xmlStr,
 	}
 	data, err := d.Create(req)
@@ -59,7 +61,7 @@ func TestDeployment_Create(t *testing.T) {
 
 func TestDeployment_Delete(t *testing.T) {
 	var d Deployment
-	err := d.Delete("8807b075-1e9c-11ed-ad65-0242ac170002")
+	err := d.Delete(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -69,7 +71,7 @@ func TestDeployment_Delete(t *testing.T) {
 
 func TestDeployment_Resource(t *testing.T) {
 	var d Deployment
-	data, err := d.Resource("2a24cec3-1e9c-11ed-ad65-0242ac170002")
+	data, err := d.Resource(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -80,7 +82,7 @@ func TestDeployment_Resource(t *testing.T) {
 
 func TestDeployment_ResourceDetail(t *testing.T) {
 	var d Deployment
-	data, err := d.ResourceDetail("2a24cec3-1e9c-11ed-ad65-0242ac170002", "TestDeployment_Create")
+	data, err := d.ResourceDetail(id, "TestDeployment_Create.bpmn20.xml")
 	if err != nil {
 		t.Error(err)
 		return
@@ -91,7 +93,7 @@ func TestDeployment_ResourceDetail(t *testing.T) {
 
 func TestDeployment_ResourceContent(t *testing.T) {
 	var d Deployment
-	data, err := d.ResourceContent("2a24cec3-1e9c-11ed-ad65-0242ac170002", "TestDeployment_Create")
+	data, err := d.ResourceContent(id, "TestDeployment_Create.bpmn20.xml")
 	if err != nil {
 		t.Error(err)
 		return

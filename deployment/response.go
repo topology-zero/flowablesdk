@@ -1,19 +1,10 @@
 package deployment
 
 type ListResponse struct {
-	Data  []Detail `json:"data"`
-	Total int      `json:"total"`
-	Start int      `json:"start"`
-	Size  int      `json:"size"`
-}
-
-type Detail struct {
-	Id             string `json:"id"`
-	Name           string `json:"name"`
-	DeploymentTime string `json:"deploymentTime"`
-	Category       string `json:"category"`
-	Url            string `json:"url"`
-	TenantId       string `json:"tenantId"`
+	Data  []Deployment `json:"data"`
+	Total int          `json:"total"`
+	Start int          `json:"start"`
+	Size  int          `json:"size"`
 }
 
 type Resource struct {

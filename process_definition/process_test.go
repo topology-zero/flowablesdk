@@ -1,4 +1,4 @@
-package process
+package process_definition
 
 import (
 	"encoding/json"
@@ -13,6 +13,8 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
+const id = "holidayRequest:1:76a35675-1f64-11ed-a343-0242ac140002"
+
 func TestProcess_List(t *testing.T) {
 	var d Process
 	data, err := d.List(ListRequest{})
@@ -26,7 +28,7 @@ func TestProcess_List(t *testing.T) {
 
 func TestProcess_Detail(t *testing.T) {
 	var d Process
-	data, err := d.Detail("createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002")
+	data, err := d.Detail(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -45,19 +47,19 @@ func TestProcess_Update(t *testing.T) {
 
 	tests := []args{
 		{
-			deploymentId: "createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002",
+			deploymentId: id,
 			req: UpdateRequest{
 				Category: "x1",
 			},
 		},
 		{
-			deploymentId: "createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002",
+			deploymentId: id,
 			req: UpdateRequest{
 				Action: "suspend",
 			},
 		},
 		{
-			deploymentId: "createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002",
+			deploymentId: id,
 			req: UpdateRequest{
 				Action: "activate",
 			},
@@ -77,7 +79,7 @@ func TestProcess_Update(t *testing.T) {
 
 func TestProcess_ResourceContent(t *testing.T) {
 	var d Process
-	data, err := d.ResourceContent("createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002")
+	data, err := d.ResourceContent(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -87,7 +89,7 @@ func TestProcess_ResourceContent(t *testing.T) {
 
 func TestProcess_Model(t *testing.T) {
 	var d Process
-	data, err := d.Model("createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002")
+	data, err := d.Model(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -97,9 +99,9 @@ func TestProcess_Model(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestProcess_ProcessCandidate(t *testing.T) {
+func TestProcess_Candidate(t *testing.T) {
 	var d Process
-	data, err := d.ProcessCandidate("createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002")
+	data, err := d.ListCandidate(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -109,39 +111,39 @@ func TestProcess_ProcessCandidate(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestProcess_ProcessAddCandidate(t *testing.T) {
+func TestProcess_AddCandidate(t *testing.T) {
 	var d Process
 
 	type args struct {
 		deploymentId string
-		req          ProcessAddCandidateRequest
+		req          AddCandidateRequest
 	}
 
 	tests := []args{
 		//{
-		//	deploymentId: "createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002",
-		//	req: ProcessAddCandidateRequest{
+		//	deploymentId: id,
+		//	req: AddCandidateRequest{
 		//		User:    "",
 		//		GroupId: "bobo",
 		//	},
 		//},
 		{
-			deploymentId: "createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002",
-			req: ProcessAddCandidateRequest{
+			deploymentId: id,
+			req: AddCandidateRequest{
 				User:    "joy",
 				GroupId: "",
 			},
 		},
 		{
-			deploymentId: "createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002",
-			req: ProcessAddCandidateRequest{
+			deploymentId: id,
+			req: AddCandidateRequest{
 				User:    "ajax",
 				GroupId: "ceo",
 			},
 		},
 	}
 	for _, v := range tests {
-		data, err := d.ProcessAddCandidate(v.deploymentId, v.req)
+		data, err := d.AddCandidate(v.deploymentId, v.req)
 		if err != nil {
 			t.Error(err)
 			return
@@ -151,11 +153,11 @@ func TestProcess_ProcessAddCandidate(t *testing.T) {
 	}
 }
 
-func TestProcess_ProcessDeleteCandidate(t *testing.T) {
+func TestProcess_DeleteCandidate(t *testing.T) {
 	var d Process
-	err := d.ProcessDeleteCandidate("createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002", ProcessDeleteCandidateRequest{
-		Family:     "users",
-		IdentityId: "ajax",
+	err := d.DeleteCandidate(id, DeleteCandidateRequest{
+		Family:      "users",
+		CandidateId: "ajax",
 	})
 	if err != nil {
 		t.Error(err)
@@ -165,11 +167,11 @@ func TestProcess_ProcessDeleteCandidate(t *testing.T) {
 	fmt.Println("delete success")
 }
 
-func TestProcess_CandidateProcess(t *testing.T) {
+func TestProcess_CandidateDetail(t *testing.T) {
 	var d Process
-	data, err := d.CandidateProcess("createTimersProcess:1:8d3f4a4f-1dfd-11ed-ab65-0242ac170002", ProcessDeleteCandidateRequest{
-		Family:     "users",
-		IdentityId: "ajax",
+	data, err := d.CandidateDetail(id, DeleteCandidateRequest{
+		Family:      "users",
+		CandidateId: "ajax",
 	})
 	if err != nil {
 		t.Error(err)

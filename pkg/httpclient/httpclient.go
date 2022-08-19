@@ -117,12 +117,22 @@ func WithFromData(body map[string]any) HTTPOption {
 	}
 }
 
-func WithFile(fieldName, fileName string, file io.Reader) HTTPOption {
+func WithMultipartFrom(file *UploadFile, fromData map[string]string) HTTPOption {
 	body := &bytes.Buffer{}
 	newWriter := multipart.NewWriter(body)
-	formFile, _ := newWriter.CreateFormFile(fieldName, fileName)
 
-	_, _ = io.Copy(formFile, file)
+	// 文件处理
+	if file != nil {
+		formFile, _ := newWriter.CreateFormFile(file.Field, file.FileName)
+		_, _ = io.Copy(formFile, file.File)
+	}
+
+	// 普通字段处理
+	if fromData != nil && len(fromData) > 0 {
+		for k, v := range fromData {
+			_ = newWriter.WriteField(k, v)
+		}
+	}
 
 	_ = newWriter.Close()
 

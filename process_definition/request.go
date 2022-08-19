@@ -1,4 +1,4 @@
-package process
+package process_definition
 
 type ListRequest struct {
 	Version         int
@@ -20,12 +20,12 @@ type UpdateRequest struct {
 	Date                    string //  2013-04-15T00:42:12Z
 }
 
-type ProcessAddCandidateRequest struct {
+type AddCandidateRequest struct {
 	User    string `json:"user,omitempty"`
 	GroupId string `json:"groupId,omitempty"`
 }
 
-type ProcessDeleteCandidateRequest struct {
-	Family     string // users or groups
-	IdentityId string
+type DeleteCandidateRequest struct {
+	Family      string // users or groups
+	CandidateId string
 }
