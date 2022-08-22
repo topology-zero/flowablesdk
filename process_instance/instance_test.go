@@ -8,6 +8,8 @@ import (
 	"testing"
 
 	"github.com/MasterJoyHunan/flowablesdk"
+	"github.com/MasterJoyHunan/flowablesdk/candidate"
+	"github.com/MasterJoyHunan/flowablesdk/variables"
 )
 
 //go:embed js.png
@@ -21,7 +23,7 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-const id = "9d5a8b48-1f68-11ed-a343-0242ac140002"
+const id = "e4051d55-21b9-11ed-b5b7-0242ac140002"
 
 func TestInstance_List(t *testing.T) {
 	var d Instance
@@ -113,19 +115,19 @@ func TestInstance_AddCandidate(t *testing.T) {
 	var d Instance
 	type args struct {
 		InstanceId string
-		req        Candidate
+		req        candidate.Candidate
 	}
 	tests := []args{
 		{
 			InstanceId: id,
-			req: Candidate{
+			req: candidate.Candidate{
 				User: "joy",
 				Type: "CEO",
 			},
 		},
 		{
 			InstanceId: id,
-			req: Candidate{
+			req: candidate.Candidate{
 				User: "BOBO",
 				Type: "CEO",
 			},
@@ -147,19 +149,19 @@ func TestInstance_DeleteCandidate(t *testing.T) {
 	var d Instance
 	type args struct {
 		InstanceId string
-		req        Candidate
+		req        candidate.Candidate
 	}
 	tests := []args{
 		{
 			InstanceId: id,
-			req: Candidate{
+			req: candidate.Candidate{
 				User: "BOBO",
 				Type: "CEO",
 			},
 		},
 		{
 			InstanceId: id,
-			req: Candidate{
+			req: candidate.Candidate{
 				User: "joy",
 				Type: "CEO",
 			},
@@ -188,7 +190,7 @@ func TestInstance_ListVariables(t *testing.T) {
 
 func TestInstance_AddVariables(t *testing.T) {
 	var d Instance
-	data, err := d.AddVariables(id, []VariableRequest{
+	data, err := d.AddVariables(id, []variables.VariableRequest{
 		{
 			Name:  "XXX",
 			Type:  "string",
@@ -203,9 +205,9 @@ func TestInstance_AddVariables(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_EditVariables(t *testing.T) {
+func TestInstance_UpdateVariables(t *testing.T) {
 	var d Instance
-	data, err := d.EditVariables(id, []VariableRequest{
+	data, err := d.UpdateVariables(id, []variables.VariableRequest{
 		{
 			Name:  "XXX",
 			Type:  "integer",
@@ -220,9 +222,9 @@ func TestInstance_EditVariables(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_EditVariable(t *testing.T) {
+func TestInstance_UpdateVariable(t *testing.T) {
 	var d Instance
-	data, err := d.EditVariable(id, "XXX", VariableRequest{
+	data, err := d.UpdateVariable(id, "XXX", variables.VariableRequest{
 		Name:  "XXX",
 		Type:  "integer",
 		Value: 11238,
@@ -248,7 +250,7 @@ func TestInstance_VariableDetail(t *testing.T) {
 
 func TestInstance_AddFileVariable(t *testing.T) {
 	var d Instance
-	data, err := d.AddFileVariable(id, FileVariableRequest{
+	data, err := d.AddFileVariable(id, variables.FileVariableRequest{
 		Name:     "costomFile2",
 		FileName: "js.png",
 		Value:    strings.NewReader(png),
@@ -261,9 +263,9 @@ func TestInstance_AddFileVariable(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_EditFileVariable(t *testing.T) {
+func TestInstance_UpdateFileVariable(t *testing.T) {
 	var d Instance
-	data, err := d.EditFileVariable(id, FileVariableRequest{
+	data, err := d.UpdateFileVariable(id, variables.FileVariableRequest{
 		Name:     "costomFile",
 		FileName: "js.png",
 		Value:    strings.NewReader(png2),

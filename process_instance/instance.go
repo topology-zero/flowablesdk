@@ -7,6 +7,7 @@ import (
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/candidate"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
+	"github.com/MasterJoyHunan/flowablesdk/variables"
 )
 
 type Instance struct {
@@ -137,7 +138,7 @@ func (i Instance) ListCandidate(instanceId string) (resp []candidate.Candidate, 
 }
 
 // AddCandidate 单个流程实例添加参与用户
-func (i Instance) AddCandidate(instanceId string, req Candidate) (resp candidate.Candidate, err error) {
+func (i Instance) AddCandidate(instanceId string, req candidate.Candidate) (resp candidate.Candidate, err error) {
 	request := flowablesdk.GetRequest(AddCandidateApi, instanceId)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
@@ -149,14 +150,14 @@ func (i Instance) AddCandidate(instanceId string, req Candidate) (resp candidate
 }
 
 // DeleteCandidate 单个流程实例删除参与用户
-func (i Instance) DeleteCandidate(instanceId string, req Candidate) error {
+func (i Instance) DeleteCandidate(instanceId string, req candidate.Candidate) error {
 	request := flowablesdk.GetRequest(DeleteCandidateApi, instanceId, req.User, req.Type)
 	_, err := request.DoHttpRequest()
 	return err
 }
 
 // ListVariables 获取单个流程实例所有变量
-func (i Instance) ListVariables(instanceId string) (resp []VariableResponse, err error) {
+func (i Instance) ListVariables(instanceId string) (resp []variables.Variable, err error) {
 	request := flowablesdk.GetRequest(ListVariablesApi, instanceId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -167,7 +168,7 @@ func (i Instance) ListVariables(instanceId string) (resp []VariableResponse, err
 }
 
 // AddVariables 单个流程实例添加变量
-func (i Instance) AddVariables(instanceId string, req []VariableRequest) (resp []VariableResponse, err error) {
+func (i Instance) AddVariables(instanceId string, req []variables.VariableRequest) (resp []variables.Variable, err error) {
 	request := flowablesdk.GetRequest(AddVariablesApi, instanceId)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
@@ -178,9 +179,9 @@ func (i Instance) AddVariables(instanceId string, req []VariableRequest) (resp [
 	return
 }
 
-// EditVariables 单个流程实例编辑变量(多个)
-func (i Instance) EditVariables(instanceId string, req []VariableRequest) (resp []VariableResponse, err error) {
-	request := flowablesdk.GetRequest(EditVariablesApi, instanceId)
+// UpdateVariables 单个流程实例编辑变量(多个)
+func (i Instance) UpdateVariables(instanceId string, req []variables.VariableRequest) (resp []variables.Variable, err error) {
+	request := flowablesdk.GetRequest(UpdateVariablesApi, instanceId)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -190,9 +191,9 @@ func (i Instance) EditVariables(instanceId string, req []VariableRequest) (resp 
 	return
 }
 
-// EditVariable 单个流程实例编辑变量(单个)
-func (i Instance) EditVariable(instanceId, variable string, req VariableRequest) (resp VariableResponse, err error) {
-	request := flowablesdk.GetRequest(EditVariableApi, instanceId, variable)
+// UpdateVariable 单个流程实例编辑变量(单个)
+func (i Instance) UpdateVariable(instanceId, variable string, req variables.VariableRequest) (resp variables.Variable, err error) {
+	request := flowablesdk.GetRequest(UpdateVariableApi, instanceId, variable)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -203,7 +204,7 @@ func (i Instance) EditVariable(instanceId, variable string, req VariableRequest)
 }
 
 // VariableDetail 获取单个流程实例所有变量
-func (i Instance) VariableDetail(instanceId, variable string) (resp VariableResponse, err error) {
+func (i Instance) VariableDetail(instanceId, variable string) (resp variables.Variable, err error) {
 	request := flowablesdk.GetRequest(VariableDetailApi, instanceId, variable)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -214,7 +215,7 @@ func (i Instance) VariableDetail(instanceId, variable string) (resp VariableResp
 }
 
 // AddFileVariable 单个流程实例添加文件变量
-func (i Instance) AddFileVariable(instanceId string, req FileVariableRequest) (resp VariableResponse, err error) {
+func (i Instance) AddFileVariable(instanceId string, req variables.FileVariableRequest) (resp variables.Variable, err error) {
 	request := flowablesdk.GetRequest(AddVariablesApi, instanceId)
 	request.With(httpclient.WithMultipartFrom(&httpclient.UploadFile{
 		Field:    "file",
@@ -232,9 +233,9 @@ func (i Instance) AddFileVariable(instanceId string, req FileVariableRequest) (r
 	return
 }
 
-// EditFileVariable 单个流程实例编辑文件变量
-func (i Instance) EditFileVariable(instanceId string, req FileVariableRequest) (resp VariableResponse, err error) {
-	request := flowablesdk.GetRequest(EditVariableApi, instanceId, req.Name)
+// UpdateFileVariable 单个流程实例编辑文件变量
+func (i Instance) UpdateFileVariable(instanceId string, req variables.FileVariableRequest) (resp variables.Variable, err error) {
+	request := flowablesdk.GetRequest(UpdateVariableApi, instanceId, req.Name)
 	request.With(httpclient.WithMultipartFrom(&httpclient.UploadFile{
 		Field:    "file",
 		FileName: req.FileName,

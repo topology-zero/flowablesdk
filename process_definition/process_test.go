@@ -13,7 +13,7 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-const id = "holidayRequest:1:76a35675-1f64-11ed-a343-0242ac140002"
+const id = "holidayRequest:1:95a702e4-21b9-11ed-b5b7-0242ac140002"
 
 func TestProcess_List(t *testing.T) {
 	var d Process
@@ -124,7 +124,7 @@ func TestProcess_AddCandidate(t *testing.T) {
 		//	deploymentId: id,
 		//	req: AddCandidateRequest{
 		//		User:    "",
-		//		GroupId: "bobo",
+		//		Group: "bobo",
 		//	},
 		//},
 		{

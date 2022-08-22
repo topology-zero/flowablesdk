@@ -17,7 +17,7 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-const id = "76961003-1f64-11ed-a343-0242ac140002"
+const id = "95963a02-21b9-11ed-b5b7-0242ac140002"
 
 // 获取列表
 func TestDeployment_List(t *testing.T) {
