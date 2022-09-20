@@ -61,5 +61,5 @@ var (
 	ListAttachmentsApi    = flowablesdk.NewApi(httpclient.GET, attachmentsUrl)
 	AddAttachmentsApi     = flowablesdk.NewApi(httpclient.POST, attachmentsUrl)
 	DeleteAttachmentsApi  = flowablesdk.NewApi(httpclient.DELETE, detailAttachmentsUrl) // 源码中提供了删除接口,文档中没有提供,已实现该接口
-	ContentAttachmentsApi = flowablesdk.NewApi(httpclient.GET, contentAttachmentsUrl)   // 源码中提供了删除接口,文档中没有提供,已实现该接口
+	ContentAttachmentsApi = flowablesdk.NewApi(httpclient.GET, contentAttachmentsUrl)   // 源码中提供了获取接口,文档中没有提供,已实现该接口
 )

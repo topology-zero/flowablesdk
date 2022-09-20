@@ -9,15 +9,17 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	flowablesdk.Setup("http://127.0.0.1:8067/flowable-rest/", "rest-admin", "123456", 10086)
+	flowablesdk.Setup(flowablesdk.Config{Url: "http://127.0.0.1:8080/"})
 	m.Run()
 }
 
-const id = "holidayRequest:1:95a702e4-21b9-11ed-b5b7-0242ac140002"
+const id = "holidayRequest:1:87b41669-228e-11ed-bae2-0242ac1b0002"
 
 func TestProcess_List(t *testing.T) {
 	var d Process
-	data, err := d.List(ListRequest{})
+	data, err := d.List(ListRequest{
+		Category: "http://www.flowable.org/processdef",
+	})
 	if err != nil {
 		t.Error(err)
 		return

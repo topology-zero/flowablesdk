@@ -1,6 +1,9 @@
 package process_definition
 
+import "github.com/MasterJoyHunan/flowablesdk/common"
+
 type ListRequest struct {
+	common.ListCommonRequest
 	Version         int
 	Name            string
 	Key             string
@@ -10,7 +13,6 @@ type ListRequest struct {
 	StartableByUser string
 	Latest          bool
 	Suspended       bool
-	Sort            string
 }
 
 type UpdateRequest struct {

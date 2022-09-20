@@ -12,6 +12,9 @@ import (
 func (t Tasks) ListAttachments(taskId string) (resp []attachment.Attachment, err error) {
 	request := flowablesdk.GetRequest(ListAttachmentsApi, taskId)
 	data, err := request.DoHttpRequest()
+	if err != nil {
+		return
+	}
 
 	err = json.Unmarshal(data, &resp)
 	return
@@ -20,8 +23,14 @@ func (t Tasks) ListAttachments(taskId string) (resp []attachment.Attachment, err
 // AddAttachmentsUrl 任务添加网络附件
 func (t Tasks) AddAttachmentsUrl(taskId string, req AddAttachmentsUrlRequest) (resp attachment.Attachment, err error) {
 	request := flowablesdk.GetRequest(AddAttachmentsApi, taskId)
-	request.With(httpclient.WithJson(req))
+	request.With(
+		httpclient.WithJson(req),
+		httpclient.WithHeader(httpclient.FlowableUserId, req.UserId),
+	)
 	data, err := request.DoHttpRequest()
+	if err != nil {
+		return
+	}
 
 	err = json.Unmarshal(data, &resp)
 	return
@@ -40,20 +49,27 @@ func (t Tasks) AddAttachments(taskId string, req AddAttachmentsRequest) (resp at
 		maps["description"] = req.Description
 	}
 
-	request.With(httpclient.WithMultipartFrom(&httpclient.UploadFile{
-		Field:    "file",
-		FileName: req.Name,
-		File:     req.File,
-	}, maps))
+	request.With(
+		httpclient.WithMultipartFrom(&httpclient.UploadFile{
+			Field:    "file",
+			FileName: req.Name,
+			File:     req.File,
+		}, maps),
+		httpclient.WithHeader(httpclient.FlowableUserId, req.UserId),
+	)
 	data, err := request.DoHttpRequest()
+	if err != nil {
+		return
+	}
 
 	err = json.Unmarshal(data, &resp)
 	return
 }
 
 // DeleteAttachments 任务删除附件
-func (t Tasks) DeleteAttachments(taskId, attachmentId string) error {
+func (t Tasks) DeleteAttachments(taskId, attachmentId string, userId ...string) error {
 	request := flowablesdk.GetRequest(DeleteAttachmentsApi, taskId, attachmentId)
+	request.With(httpclient.WithHeader(httpclient.FlowableUserId, userId[0]))
 	_, err := request.DoHttpRequest()
 	return err
 }

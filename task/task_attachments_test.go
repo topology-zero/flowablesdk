@@ -61,7 +61,7 @@ func TestTasks_AddAttachments(t *testing.T) {
 
 func TestTasks_DeleteAttachments(t *testing.T) {
 	var task Tasks
-	err := task.DeleteAttachments(id, attachmentsId)
+	err := task.DeleteAttachments(id, attachmentsId, "1")
 	if err != nil {
 		t.Error(err)
 		return
@@ -72,7 +72,7 @@ func TestTasks_DeleteAttachments(t *testing.T) {
 
 func TestTasks_ContentAttachments(t *testing.T) {
 	var task Tasks
-	data, err := task.ContentAttachments(id, "819fdecf-21f7-11ed-b5b7-0242ac140002")
+	data, err := task.ContentAttachments(id, "072a57ad-3883-11ed-9f1e-38f3ab6b92c1")
 	if err != nil {
 		t.Error(err)
 		return

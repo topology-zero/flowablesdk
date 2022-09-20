@@ -12,6 +12,9 @@ import (
 func (t Tasks) ListComments(taskId string) (resp []comment.Comment, err error) {
 	request := flowablesdk.GetRequest(ListCommentsApi, taskId)
 	data, err := request.DoHttpRequest()
+	if err != nil {
+		return
+	}
 
 	err = json.Unmarshal(data, &resp)
 	return
@@ -29,8 +32,14 @@ func (t Tasks) DetailComments(taskId, commentsId string) (resp comment.Comment, 
 // AddComments 为任务添加备注
 func (t Tasks) AddComments(taskId string, req AddCommentsRequest) (resp comment.Comment, err error) {
 	request := flowablesdk.GetRequest(AddCommentsApi, taskId)
-	request.With(httpclient.WithJson(req))
+	request.With(
+		httpclient.WithJson(req),
+		httpclient.WithHeader(httpclient.FlowableUserId, req.UserId),
+	)
 	data, err := request.DoHttpRequest()
+	if err != nil {
+		return
+	}
 
 	err = json.Unmarshal(data, &resp)
 	return

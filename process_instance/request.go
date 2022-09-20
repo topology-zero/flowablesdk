@@ -1,8 +1,12 @@
 package process_instance
 
-import "github.com/MasterJoyHunan/flowablesdk/variables"
+import (
+	"github.com/MasterJoyHunan/flowablesdk/common"
+	"github.com/MasterJoyHunan/flowablesdk/variables"
+)
 
 type ListRequest struct {
+	common.ListCommonRequest
 	Id                   string
 	ProcessDefinitionKey string
 	ProcessDefinitionId  string
@@ -10,7 +14,6 @@ type ListRequest struct {
 	InvolvedUser         string
 	Suspended            *bool
 	TenantId             string
-	Sort                 string
 }
 
 type UpdateRequest struct {

@@ -73,7 +73,7 @@ func (t Tasks) AddIdentity(taskId string, req AddIdentityRequest) (resp candidat
 	return
 }
 
-// DeleteIdentity 任务添加相关人员
+// DeleteIdentity 任务删除相关人员
 func (t Tasks) DeleteIdentity(taskId string, req DetailIdentityRequest) error {
 	if !(req.Family == "groups" || req.Family == "users") {
 		return errors.New("family not in groups or users")

@@ -15,3 +15,10 @@ type FileVariableRequest struct {
 	Scope    string // task 使用
 	Value    io.Reader
 }
+
+type VariableSearchRequest struct {
+	Name      string `json:"name"`
+	Value     int    `json:"value"`
+	Operation string `json:"operation"`
+	Type      string `json:"type"`
+}

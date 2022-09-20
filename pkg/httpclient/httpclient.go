@@ -21,6 +21,8 @@ const (
 	POST   = Method("POST")
 	PUT    = Method("PUT")
 	DELETE = Method("DELETE")
+
+	FlowableUserId = "FlowableUserId"
 )
 
 type Request struct {

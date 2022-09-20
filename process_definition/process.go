@@ -69,9 +69,21 @@ func (p Process) List(req ListRequest) (resp ListResponse, err error) {
 
 	if len(req.Sort) > 0 {
 		query["sort"] = req.Sort
-	} else {
-		query["sort"] = "name"
 	}
+
+	if len(req.Order) > 0 {
+		query["order"] = req.Order
+	}
+
+	if req.Start < 0 {
+		req.Start = 0
+	}
+	query["start"] = strconv.Itoa(req.Start)
+
+	if req.Size < 1 {
+		req.Size = 10
+	}
+	query["size"] = strconv.Itoa(req.Size)
 
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithQuery(query))

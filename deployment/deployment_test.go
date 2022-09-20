@@ -13,11 +13,16 @@ import (
 var xmlStr string
 
 func TestMain(m *testing.M) {
-	flowablesdk.Setup("http://127.0.0.1:8067/flowable-rest/", "rest-admin", "123456", 10086)
+	flowablesdk.Setup(flowablesdk.Config{
+		Url: "http://127.0.0.1:8080/",
+		GetUserId: func() string {
+			return "1"
+		},
+	})
 	m.Run()
 }
 
-const id = "95963a02-21b9-11ed-b5b7-0242ac140002"
+const id = "9501976b-3011-11ed-99ce-38f3ab6b92c1"
 
 // 获取列表
 func TestDeployment_List(t *testing.T) {

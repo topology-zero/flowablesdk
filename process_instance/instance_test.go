@@ -19,7 +19,7 @@ var png string
 var png2 string
 
 func TestMain(m *testing.M) {
-	flowablesdk.Setup("http://127.0.0.1:8067/flowable-rest/", "rest-admin", "123456", 10086)
+	flowablesdk.Setup(flowablesdk.Config{Url: "http://127.0.0.1:8080/"})
 	m.Run()
 }
 

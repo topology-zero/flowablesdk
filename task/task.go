@@ -3,6 +3,9 @@ package task
 import (
 	"encoding/json"
 	"errors"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
@@ -10,24 +13,36 @@ import (
 )
 
 type Tasks struct {
-	Assignee          string               `json:"assignee"`
-	CreateTime        string               `json:"createTime"`
-	DelegationState   string               `json:"delegationState"`
-	Description       string               `json:"description"`
-	DueDate           string               `json:"dueDate"`
-	Execution         string               `json:"execution"`
-	Id                string               `json:"id"`
-	Name              string               `json:"name"`
-	Owner             string               `json:"owner"`
-	ParentTask        string               `json:"parentTask"`
-	Priority          int                  `json:"priority"`
-	ProcessDefinition string               `json:"processDefinition"`
-	ProcessInstance   string               `json:"processInstance"`
-	Suspended         bool                 `json:"suspended"`
-	TaskDefinitionKey string               `json:"taskDefinitionKey"`
-	Url               string               `json:"url"`
-	TenantId          string               `json:"tenantId"`
-	Variables         []variables.Variable `json:"variables"`
+	Id                        string               `json:"id"`
+	Url                       string               `json:"url"`
+	Owner                     string               `json:"owner"`
+	Assignee                  string               `json:"assignee"`
+	DelegationState           string               `json:"delegationState"`
+	Name                      string               `json:"name"`
+	Description               string               `json:"description"`
+	CreateTime                *time.Time           `json:"createTime"`
+	DueDate                   *time.Time           `json:"dueDate"`
+	Priority                  int                  `json:"priority"`
+	Suspended                 bool                 `json:"suspended"`
+	ClaimTime                 *time.Time           `json:"claimTime"`
+	TaskDefinitionKey         string               `json:"taskDefinitionKey"`
+	ScopeDefinitionId         string               `json:"scopeDefinitionId"`
+	ScopeId                   string               `json:"scopeId"`
+	SubScopeId                string               `json:"subScopeId"`
+	ScopeType                 string               `json:"scopeType"`
+	PropagatedStageInstanceId string               `json:"propagatedStageInstanceId"`
+	TenantId                  string               `json:"tenantId"`
+	Category                  string               `json:"category"`
+	FormKey                   string               `json:"formKey"`
+	ParentTaskId              string               `json:"parentTaskId"`
+	ParentTaskUrl             string               `json:"parentTaskUrl"`
+	ExecutionId               string               `json:"executionId"`
+	ExecutionUrl              string               `json:"executionUrl"`
+	ProcessInstanceId         string               `json:"processInstanceId"`
+	ProcessInstanceUrl        string               `json:"processInstanceUrl"`
+	ProcessDefinitionId       string               `json:"processDefinitionId"`
+	ProcessDefinitionUrl      string               `json:"processDefinitionUrl"`
+	Variables                 []variables.Variable `json:"variables"`
 }
 
 // List 获取任务列表
@@ -38,17 +53,105 @@ func (t Tasks) List(req ListRequest) (resp ListResponse, err error) {
 		query["nameLike"] = req.Name
 	}
 
+	if len(req.Description) > 0 {
+		query["description"] = req.Description
+	}
+
+	if len(req.Priority) == 2 {
+		query["minimumPriority"] = strconv.Itoa(req.Priority[0])
+		query["maximumPriority"] = strconv.Itoa(req.Priority[1])
+	}
+
+	if len(req.Assignee) > 0 {
+		query["assignee"] = req.Assignee
+	}
+
+	if len(req.Owner) > 0 {
+		query["owner"] = req.Owner
+	}
+
+	if len(req.CandidateUser) > 0 {
+		query["candidateUser"] = req.CandidateUser
+	}
+
+	if len(req.CandidateGroups) > 0 {
+		query["candidateGroups"] = strings.Join(req.CandidateGroups, ",")
+	}
+
+	if len(req.CandidateOrAssigned) > 0 {
+		query["candidateOrAssigned"] = req.CandidateOrAssigned
+	}
+
+	if len(req.InvolvedUser) > 0 {
+		query["involvedUser"] = req.InvolvedUser
+	}
+
+	if req.Unassigned {
+		query["unassigned"] = "true"
+	}
+
+	if len(req.DelegationState) > 0 {
+		query["delegationState"] = req.DelegationState
+	}
+
+	if len(req.TaskDefinitionKey) > 0 {
+		query["taskDefinitionKey"] = req.TaskDefinitionKey
+	}
+
+	if len(req.ProcessInstanceId) > 0 {
+		query["processInstanceId"] = req.ProcessInstanceId
+	}
+
+	if len(req.ProcessInstanceBusinessKey) > 0 {
+		query["processInstanceBusinessKey"] = req.ProcessInstanceBusinessKey
+	}
+
+	if len(req.ProcessDefinitionId) > 0 {
+		query["processDefinitionId"] = req.ProcessDefinitionId
+	}
+
+	if len(req.ProcessDefinitionKey) > 0 {
+		query["processDefinitionKey"] = req.ProcessDefinitionKey
+	}
+
+	if len(req.ProcessDefinitionName) > 0 {
+		query["processDefinitionName"] = req.ProcessDefinitionName
+	}
+
+	if len(req.CreateTime) == 2 {
+		query["createdAfter"] = req.CreateTime[0].Format(time.RFC3339)
+		query["createdBefore"] = req.CreateTime[1].Format(time.RFC3339)
+	}
+
+	if req.Active != nil {
+		if *req.Active {
+			query["active"] = "true"
+		} else {
+			query["active"] = "false"
+		}
+	}
+
 	if len(req.Category) > 0 {
 		query["category"] = req.Category
 	}
 
 	if len(req.Sort) > 0 {
 		query["sort"] = req.Sort
-	} else {
-		query["sort"] = "id"
 	}
 
-	// TODO 好多参数未完成
+	if len(req.Order) > 0 {
+		query["order"] = req.Order
+	}
+
+	if req.Start < 0 {
+		req.Start = 0
+	}
+	query["start"] = strconv.Itoa(req.Start)
+
+	if req.Size < 1 {
+		req.Size = 10
+	}
+	query["size"] = strconv.Itoa(req.Size)
 
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithQuery(query))

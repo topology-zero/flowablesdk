@@ -3,6 +3,7 @@ package deployment
 import (
 	"encoding/json"
 	"errors"
+	"strconv"
 	"strings"
 
 	"github.com/MasterJoyHunan/flowablesdk"
@@ -32,9 +33,21 @@ func (d Deployment) List(req ListRequest) (resp ListResponse, err error) {
 
 	if len(req.Sort) > 0 {
 		query["sort"] = req.Sort
-	} else {
-		query["sort"] = "deployTime"
 	}
+
+	if len(req.Order) > 0 {
+		query["order"] = req.Order
+	}
+
+	if req.Start < 0 {
+		req.Start = 0
+	}
+	query["start"] = strconv.Itoa(req.Start)
+
+	if req.Size < 1 {
+		req.Size = 10
+	}
+	query["size"] = strconv.Itoa(req.Size)
 
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithQuery(query))
@@ -70,7 +83,9 @@ func (d Deployment) Create(req CreateRequest) (resp Deployment, err error) {
 		Field:    "file",
 		FileName: req.FileName,
 		File:     strings.NewReader(req.Xml),
-	}, nil)).DoHttpRequest()
+	}, map[string]string{
+		"category": req.Category,
+	})).DoHttpRequest()
 	if err != nil {
 		return
 	}
@@ -83,10 +98,7 @@ func (d Deployment) Create(req CreateRequest) (resp Deployment, err error) {
 func (d Deployment) Delete(deploymentId string) error {
 	request := flowablesdk.GetRequest(DeleteApi, deploymentId)
 	_, err := request.DoHttpRequest()
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 // Resource 查看流程资源列表

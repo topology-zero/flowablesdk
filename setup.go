@@ -9,17 +9,12 @@ type Config struct {
 
 var Configs Config
 
-func Setup(url, username, password string, tenantId ...int) {
-	if url[len(url)-1] == '/' {
-		url = url[:len(url)-1]
+func Setup(c Config) {
+	if c.Url[len(c.Url)-1] == '/' {
+		c.Url = c.Url[:len(c.Url)-1]
 	}
-	Configs = Config{
-		Url:      url,
-		Username: username,
-		Password: password,
-	}
-
-	if len(tenantId) > 0 {
-		Configs.TenantId = tenantId[0]
-	}
+	Configs.Url = c.Url
+	Configs.Username = c.Username
+	Configs.Password = c.Password
+	Configs.TenantId = c.TenantId
 }

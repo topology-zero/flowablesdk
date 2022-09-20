@@ -12,7 +12,7 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	flowablesdk.Setup("http://127.0.0.1:8067/flowable-rest/", "rest-admin", "123456", 10086)
+	flowablesdk.Setup(flowablesdk.Config{Url: "http://127.0.0.1:8080/"})
 	m.Run()
 }
 
@@ -22,7 +22,7 @@ var image1 string
 //go:embed js4.png
 var image2 string
 
-const id = "e40a9b9b-21b9-11ed-b5b7-0242ac140002"
+const id = "e50139a9-3882-11ed-9f1e-38f3ab6b92c1"
 
 func TestTasks_List(t *testing.T) {
 	var task Tasks
@@ -140,8 +140,8 @@ func TestTasks_Action(t *testing.T) {
 		{
 			deploymentId: id,
 			req: ActionRequest{
-				Action:   "delegate",
-				Assignee: "ceo",
+				Action: "complete",
+				//Assignee: "ceo",
 			},
 		},
 	}
@@ -345,9 +345,9 @@ func TestTasks_AddIdentity(t *testing.T) {
 	var task Tasks
 
 	data, err := task.AddIdentity(id, AddIdentityRequest{
-		User:  "bobo2",
+		User:  "2",
 		Group: "",
-		Type:  "myType",
+		Type:  "candidate",
 	})
 
 	if err != nil {
@@ -363,8 +363,8 @@ func TestTasks_DeleteIdentity(t *testing.T) {
 
 	err := task.DeleteIdentity(id, DetailIdentityRequest{
 		Family:     "users",
-		IdentityId: "bobo2",
-		Type:       "myType",
+		IdentityId: "1",
+		Type:       "assignee",
 	})
 
 	if err != nil {

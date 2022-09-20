@@ -3,6 +3,7 @@ package process_instance
 import (
 	"encoding/json"
 	"errors"
+	"strconv"
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/candidate"
@@ -34,10 +35,6 @@ func (i Instance) List(req ListRequest) (resp ListResponse, err error) {
 		query["processDefinitionKey"] = req.ProcessDefinitionKey
 	}
 
-	if len(req.ProcessDefinitionKey) > 0 {
-		query["processDefinitionKey"] = req.ProcessDefinitionKey
-	}
-
 	if len(req.ProcessDefinitionId) > 0 {
 		query["processDefinitionId"] = req.ProcessDefinitionId
 	}
@@ -60,9 +57,21 @@ func (i Instance) List(req ListRequest) (resp ListResponse, err error) {
 
 	if len(req.Sort) > 0 {
 		query["sort"] = req.Sort
-	} else {
-		query["sort"] = "id"
 	}
+
+	if len(req.Order) > 0 {
+		query["order"] = req.Order
+	}
+
+	if req.Start < 0 {
+		req.Start = 0
+	}
+	query["start"] = strconv.Itoa(req.Start)
+
+	if req.Size < 1 {
+		req.Size = 10
+	}
+	query["size"] = strconv.Itoa(req.Size)
 
 	request.With(httpclient.WithQuery(query))
 	data, err := request.DoHttpRequest()
@@ -108,10 +117,7 @@ func (i Instance) Update(instanceId string, req UpdateRequest) (resp Instance, e
 func (i Instance) Delete(instanceId string) error {
 	request := flowablesdk.GetRequest(DeleteApi, instanceId)
 	_, err := request.DoHttpRequest()
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 // Start 启动一个流程实例
