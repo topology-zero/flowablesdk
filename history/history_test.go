@@ -11,12 +11,7 @@ import (
 const id = "3cb5892b-3571-11ed-a314-38f3ab6b92c1"
 
 func TestMain(m *testing.M) {
-	flowablesdk.Setup(flowablesdk.Config{
-		Url: "http://127.0.0.1:8080/",
-		GetUserId: func() string {
-			return "1"
-		},
-	})
+	flowablesdk.Setup(flowablesdk.Config{Url: "http://127.0.0.1:8080/"})
 	m.Run()
 }
 
