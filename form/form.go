@@ -65,6 +65,9 @@ func (f *Form) SubmitForm(req SubmitFromRequest) (resp SubmitFromResponse, err e
 		return
 	}
 
+	if len(req.TaskId) > 0 {
+		return
+	}
 	err = json.Unmarshal(data, &resp)
 	return
 }

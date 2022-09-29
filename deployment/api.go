@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	baseUrl            = "/service/repository/deployments"
+	baseUrl            = "/repository/deployments"
 	detailUrl          = baseUrl + "/%s"
 	ResourceURL        = detailUrl + "/resources"
 	ResourceDetailURL  = ResourceURL + "/%s"
@@ -14,11 +14,11 @@ const (
 )
 
 var (
-	ListApi            = flowablesdk.NewApi(httpclient.GET, baseUrl)
-	DetailApi          = flowablesdk.NewApi(httpclient.GET, detailUrl)
-	CreateApi          = flowablesdk.NewApi(httpclient.POST, baseUrl)
-	DeleteApi          = flowablesdk.NewApi(httpclient.DELETE, detailUrl)
-	ResourceApi        = flowablesdk.NewApi(httpclient.GET, ResourceURL)
-	ResourceDetailApi  = flowablesdk.NewApi(httpclient.GET, ResourceDetailURL)
-	ResourceContentApi = flowablesdk.NewApi(httpclient.GET, ResourceContentURL)
+	ListApi            = flowablesdk.NewApi(httpclient.GET, baseUrl, flowablesdk.ProcessPrefix)
+	DetailApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
+	CreateApi          = flowablesdk.NewApi(httpclient.POST, baseUrl, flowablesdk.ProcessPrefix)
+	DeleteApi          = flowablesdk.NewApi(httpclient.DELETE, detailUrl, flowablesdk.ProcessPrefix)
+	ResourceApi        = flowablesdk.NewApi(httpclient.GET, ResourceURL, flowablesdk.ProcessPrefix)
+	ResourceDetailApi  = flowablesdk.NewApi(httpclient.GET, ResourceDetailURL, flowablesdk.ProcessPrefix)
+	ResourceContentApi = flowablesdk.NewApi(httpclient.GET, ResourceContentURL, flowablesdk.ProcessPrefix)
 )

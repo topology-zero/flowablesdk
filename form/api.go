@@ -6,10 +6,10 @@ import (
 )
 
 const (
-	baseUrl = "/service/form/form-data"
+	baseUrl = "/form/form-data"
 )
 
 var (
-	DetailFromApi = flowablesdk.NewApi(httpclient.GET, baseUrl)
-	SubmitFromApi = flowablesdk.NewApi(httpclient.POST, baseUrl)
+	DetailFromApi = flowablesdk.NewApi(httpclient.GET, baseUrl, flowablesdk.ProcessPrefix)
+	SubmitFromApi = flowablesdk.NewApi(httpclient.POST, baseUrl, flowablesdk.ProcessPrefix)
 )

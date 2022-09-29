@@ -4,12 +4,11 @@ import (
 	"time"
 
 	"github.com/MasterJoyHunan/flowablesdk/common"
-	"github.com/MasterJoyHunan/flowablesdk/pkg/request"
 	"github.com/MasterJoyHunan/flowablesdk/variables"
 )
 
 type ListRequest struct {
-	request.CommonRequest
+	common.ListCommonRequest
 	ProcessInstanceId    string
 	ProcessDefinitionKey string
 	ProcessDefinitionId  string

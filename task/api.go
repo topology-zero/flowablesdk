@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	baseUrl               = "/service/runtime/tasks"
+	baseUrl               = "/runtime/tasks"
 	detailUrl             = baseUrl + "/%s"
 	variablesUrl          = detailUrl + "/variables"
 	detailVariablesUrl    = variablesUrl + "/%s"
@@ -25,41 +25,41 @@ const (
 )
 
 var (
-	ListApi   = flowablesdk.NewApi(httpclient.GET, baseUrl)
-	DetailApi = flowablesdk.NewApi(httpclient.GET, detailUrl)
-	UpdateApi = flowablesdk.NewApi(httpclient.PUT, detailUrl)
-	ActionApi = flowablesdk.NewApi(httpclient.POST, detailUrl)
-	DeleteApi = flowablesdk.NewApi(httpclient.DELETE, detailUrl)
+	ListApi   = flowablesdk.NewApi(httpclient.GET, baseUrl, flowablesdk.ProcessPrefix)
+	DetailApi = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
+	UpdateApi = flowablesdk.NewApi(httpclient.PUT, detailUrl, flowablesdk.ProcessPrefix)
+	ActionApi = flowablesdk.NewApi(httpclient.POST, detailUrl, flowablesdk.ProcessPrefix)
+	DeleteApi = flowablesdk.NewApi(httpclient.DELETE, detailUrl, flowablesdk.ProcessPrefix)
 
-	ListVariablesApi   = flowablesdk.NewApi(httpclient.GET, variablesUrl)
-	DetailVariableApi  = flowablesdk.NewApi(httpclient.GET, detailVariablesUrl)
-	AddVariablesApi    = flowablesdk.NewApi(httpclient.POST, variablesUrl)
-	UpdateVariableApi  = flowablesdk.NewApi(httpclient.PUT, detailVariablesUrl)
-	DeleteVariablesApi = flowablesdk.NewApi(httpclient.DELETE, variablesUrl)
-	DeleteVariableApi  = flowablesdk.NewApi(httpclient.DELETE, detailVariablesUrl)
+	ListVariablesApi   = flowablesdk.NewApi(httpclient.GET, variablesUrl, flowablesdk.ProcessPrefix)
+	DetailVariableApi  = flowablesdk.NewApi(httpclient.GET, detailVariablesUrl, flowablesdk.ProcessPrefix)
+	AddVariablesApi    = flowablesdk.NewApi(httpclient.POST, variablesUrl, flowablesdk.ProcessPrefix)
+	UpdateVariableApi  = flowablesdk.NewApi(httpclient.PUT, detailVariablesUrl, flowablesdk.ProcessPrefix)
+	DeleteVariablesApi = flowablesdk.NewApi(httpclient.DELETE, variablesUrl, flowablesdk.ProcessPrefix)
+	DeleteVariableApi  = flowablesdk.NewApi(httpclient.DELETE, detailVariablesUrl, flowablesdk.ProcessPrefix)
 
-	DetailBinaryVariableApi = flowablesdk.NewApi(httpclient.GET, binaryVariablesUrl)
-	AddBinaryVariableApi    = flowablesdk.NewApi(httpclient.POST, variablesUrl)
-	UpdateBinaryVariableApi = flowablesdk.NewApi(httpclient.PUT, detailVariablesUrl)
+	DetailBinaryVariableApi = flowablesdk.NewApi(httpclient.GET, binaryVariablesUrl, flowablesdk.ProcessPrefix)
+	AddBinaryVariableApi    = flowablesdk.NewApi(httpclient.POST, variablesUrl, flowablesdk.ProcessPrefix)
+	UpdateBinaryVariableApi = flowablesdk.NewApi(httpclient.PUT, detailVariablesUrl, flowablesdk.ProcessPrefix)
 
-	ListIdentityApi       = flowablesdk.NewApi(httpclient.GET, identityUrl)
-	ListUsersIdentityApi  = flowablesdk.NewApi(httpclient.GET, usersIdentityUrl)
-	ListGroupsIdentityApi = flowablesdk.NewApi(httpclient.GET, groupsIdentityUrl)
-	DetailIdentityApi     = flowablesdk.NewApi(httpclient.GET, detailIdentityUrl)
-	AddIdentityApi        = flowablesdk.NewApi(httpclient.POST, identityUrl)
-	DeleteIdentityApi     = flowablesdk.NewApi(httpclient.DELETE, detailIdentityUrl)
+	ListIdentityApi       = flowablesdk.NewApi(httpclient.GET, identityUrl, flowablesdk.ProcessPrefix)
+	ListUsersIdentityApi  = flowablesdk.NewApi(httpclient.GET, usersIdentityUrl, flowablesdk.ProcessPrefix)
+	ListGroupsIdentityApi = flowablesdk.NewApi(httpclient.GET, groupsIdentityUrl, flowablesdk.ProcessPrefix)
+	DetailIdentityApi     = flowablesdk.NewApi(httpclient.GET, detailIdentityUrl, flowablesdk.ProcessPrefix)
+	AddIdentityApi        = flowablesdk.NewApi(httpclient.POST, identityUrl, flowablesdk.ProcessPrefix)
+	DeleteIdentityApi     = flowablesdk.NewApi(httpclient.DELETE, detailIdentityUrl, flowablesdk.ProcessPrefix)
 
-	ListCommentsApi   = flowablesdk.NewApi(httpclient.GET, commentsUrl)
-	DetailCommentsApi = flowablesdk.NewApi(httpclient.GET, detailCommentsUrl)
-	AddCommentsApi    = flowablesdk.NewApi(httpclient.POST, commentsUrl)
-	DeleteCommentsApi = flowablesdk.NewApi(httpclient.DELETE, detailCommentsUrl)
+	ListCommentsApi   = flowablesdk.NewApi(httpclient.GET, commentsUrl, flowablesdk.ProcessPrefix)
+	DetailCommentsApi = flowablesdk.NewApi(httpclient.GET, detailCommentsUrl, flowablesdk.ProcessPrefix)
+	AddCommentsApi    = flowablesdk.NewApi(httpclient.POST, commentsUrl, flowablesdk.ProcessPrefix)
+	DeleteCommentsApi = flowablesdk.NewApi(httpclient.DELETE, detailCommentsUrl, flowablesdk.ProcessPrefix)
 
-	ListEventsApi   = flowablesdk.NewApi(httpclient.GET, eventsUrl)
-	DetailEventsApi = flowablesdk.NewApi(httpclient.GET, detailEventsUrl)
-	DeleteEventsApi = flowablesdk.NewApi(httpclient.GET, detailEventsUrl) // 源码中提供了删除接口,文档中没有提供,暂不实现该接口
+	ListEventsApi   = flowablesdk.NewApi(httpclient.GET, eventsUrl, flowablesdk.ProcessPrefix)
+	DetailEventsApi = flowablesdk.NewApi(httpclient.GET, detailEventsUrl, flowablesdk.ProcessPrefix)
+	DeleteEventsApi = flowablesdk.NewApi(httpclient.GET, detailEventsUrl, flowablesdk.ProcessPrefix) // 源码中提供了删除接口,文档中没有提供,暂不实现该接口
 
-	ListAttachmentsApi    = flowablesdk.NewApi(httpclient.GET, attachmentsUrl)
-	AddAttachmentsApi     = flowablesdk.NewApi(httpclient.POST, attachmentsUrl)
-	DeleteAttachmentsApi  = flowablesdk.NewApi(httpclient.DELETE, detailAttachmentsUrl) // 源码中提供了删除接口,文档中没有提供,已实现该接口
-	ContentAttachmentsApi = flowablesdk.NewApi(httpclient.GET, contentAttachmentsUrl)   // 源码中提供了获取接口,文档中没有提供,已实现该接口
+	ListAttachmentsApi    = flowablesdk.NewApi(httpclient.GET, attachmentsUrl, flowablesdk.ProcessPrefix)
+	AddAttachmentsApi     = flowablesdk.NewApi(httpclient.POST, attachmentsUrl, flowablesdk.ProcessPrefix)
+	DeleteAttachmentsApi  = flowablesdk.NewApi(httpclient.DELETE, detailAttachmentsUrl, flowablesdk.ProcessPrefix) // 源码中提供了删除接口,文档中没有提供,已实现该接口
+	ContentAttachmentsApi = flowablesdk.NewApi(httpclient.GET, contentAttachmentsUrl, flowablesdk.ProcessPrefix)   // 源码中提供了获取接口,文档中没有提供,已实现该接口
 )

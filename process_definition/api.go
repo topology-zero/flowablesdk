@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	baseUrl            = "/service/repository/process-definitions"
+	baseUrl            = "/repository/process-definitions"
 	detailUrl          = baseUrl + "/%s"
 	ResourceContentUrl = detailUrl + "/resourcedata"
 	ModelUrl           = detailUrl + "/model"
@@ -15,13 +15,13 @@ const (
 )
 
 var (
-	ListApi            = flowablesdk.NewApi(httpclient.GET, baseUrl)
-	DetailApi          = flowablesdk.NewApi(httpclient.GET, detailUrl)
-	UpdateApi          = flowablesdk.NewApi(httpclient.PUT, detailUrl)
-	ResourceContentApi = flowablesdk.NewApi(httpclient.GET, ResourceContentUrl)
-	ModelApi           = flowablesdk.NewApi(httpclient.GET, ModelUrl)
-	ListCandidateApi   = flowablesdk.NewApi(httpclient.GET, CandidateUrl)
-	AddCandidateApi    = flowablesdk.NewApi(httpclient.POST, CandidateUrl)
-	DeleteCandidateApi = flowablesdk.NewApi(httpclient.DELETE, CandidateDetailUrl)
-	CandidateDetailApi = flowablesdk.NewApi(httpclient.GET, CandidateDetailUrl)
+	ListApi            = flowablesdk.NewApi(httpclient.GET, baseUrl, flowablesdk.ProcessPrefix)
+	DetailApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
+	UpdateApi          = flowablesdk.NewApi(httpclient.PUT, detailUrl, flowablesdk.ProcessPrefix)
+	ResourceContentApi = flowablesdk.NewApi(httpclient.GET, ResourceContentUrl, flowablesdk.ProcessPrefix)
+	ModelApi           = flowablesdk.NewApi(httpclient.GET, ModelUrl, flowablesdk.ProcessPrefix)
+	ListCandidateApi   = flowablesdk.NewApi(httpclient.GET, CandidateUrl, flowablesdk.ProcessPrefix)
+	AddCandidateApi    = flowablesdk.NewApi(httpclient.POST, CandidateUrl, flowablesdk.ProcessPrefix)
+	DeleteCandidateApi = flowablesdk.NewApi(httpclient.DELETE, CandidateDetailUrl, flowablesdk.ProcessPrefix)
+	CandidateDetailApi = flowablesdk.NewApi(httpclient.GET, CandidateDetailUrl, flowablesdk.ProcessPrefix)
 )

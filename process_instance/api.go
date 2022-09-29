@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	baseUrl           = "/service/runtime/process-instances"
+	baseUrl           = "/runtime/process-instances"
 	detailUrl         = baseUrl + "/%s"
 	identityUrl       = detailUrl + "/identitylinks"
 	identityDetailUrl = identityUrl + "/users/%s/%s"
@@ -15,17 +15,17 @@ const (
 )
 
 var (
-	ListApi            = flowablesdk.NewApi(httpclient.GET, baseUrl)
-	DetailApi          = flowablesdk.NewApi(httpclient.GET, detailUrl)
-	UpdateApi          = flowablesdk.NewApi(httpclient.GET, detailUrl)
-	DeleteApi          = flowablesdk.NewApi(httpclient.GET, detailUrl)
-	StartApi           = flowablesdk.NewApi(httpclient.POST, baseUrl)
-	ListCandidateApi   = flowablesdk.NewApi(httpclient.GET, identityUrl)
-	AddCandidateApi    = flowablesdk.NewApi(httpclient.POST, identityUrl)
-	DeleteCandidateApi = flowablesdk.NewApi(httpclient.DELETE, identityDetailUrl)
-	ListVariablesApi   = flowablesdk.NewApi(httpclient.GET, variablesUrl)
-	AddVariablesApi    = flowablesdk.NewApi(httpclient.POST, variablesUrl)
-	UpdateVariablesApi = flowablesdk.NewApi(httpclient.PUT, variablesUrl)
-	UpdateVariableApi  = flowablesdk.NewApi(httpclient.PUT, variableDetailUrl)
-	VariableDetailApi  = flowablesdk.NewApi(httpclient.GET, variableDetailUrl)
+	ListApi            = flowablesdk.NewApi(httpclient.GET, baseUrl, flowablesdk.ProcessPrefix)
+	DetailApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
+	UpdateApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
+	DeleteApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
+	StartApi           = flowablesdk.NewApi(httpclient.POST, baseUrl, flowablesdk.ProcessPrefix)
+	ListCandidateApi   = flowablesdk.NewApi(httpclient.GET, identityUrl, flowablesdk.ProcessPrefix)
+	AddCandidateApi    = flowablesdk.NewApi(httpclient.POST, identityUrl, flowablesdk.ProcessPrefix)
+	DeleteCandidateApi = flowablesdk.NewApi(httpclient.DELETE, identityDetailUrl, flowablesdk.ProcessPrefix)
+	ListVariablesApi   = flowablesdk.NewApi(httpclient.GET, variablesUrl, flowablesdk.ProcessPrefix)
+	AddVariablesApi    = flowablesdk.NewApi(httpclient.POST, variablesUrl, flowablesdk.ProcessPrefix)
+	UpdateVariablesApi = flowablesdk.NewApi(httpclient.PUT, variablesUrl, flowablesdk.ProcessPrefix)
+	UpdateVariableApi  = flowablesdk.NewApi(httpclient.PUT, variableDetailUrl, flowablesdk.ProcessPrefix)
+	VariableDetailApi  = flowablesdk.NewApi(httpclient.GET, variableDetailUrl, flowablesdk.ProcessPrefix)
 )

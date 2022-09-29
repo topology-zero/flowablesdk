@@ -9,7 +9,14 @@ import (
 )
 
 func GetRequest(api *Api, params ...any) *httpclient.Request {
-	url := Configs.Url + api.Url
+	url := Configs.Url
+	if api.Prefix == ProcessPrefix {
+		url += Configs.ProcessPrefix
+	} else if api.Prefix == FormPrefix {
+		url += Configs.FormPrefix
+	}
+	url += api.Url
+
 	if len(params) > 0 {
 		url = fmt.Sprintf(url, params...)
 	}
