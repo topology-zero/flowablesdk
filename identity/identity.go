@@ -1,6 +1,6 @@
-package history_process_instances
+package identity
 
-type IdentityResponse struct {
+type Identity struct {
 	Type               string `json:"type"`
 	UserId             string `json:"userId"`
 	GroupId            string `json:"groupId"`

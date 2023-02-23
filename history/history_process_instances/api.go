@@ -6,10 +6,11 @@ import (
 )
 
 const (
-	baseUrl     = "/history/historic-process-instances"
-	queryUrl    = "/query/historic-process-instances"
-	detailUrl   = baseUrl + "/%s"
-	identityUrl = detailUrl + "/identitylinks"
+	baseUrl       = "/history/historic-process-instances"
+	queryUrl      = "/query/historic-process-instances"
+	detailUrl     = baseUrl + "/%s"
+	identityUrl   = detailUrl + "/identitylinks"
+	binaryDataUrl = detailUrl + "/variables/%s/data"
 )
 
 var (
@@ -17,4 +18,5 @@ var (
 	DetailApi       = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
 	DeleteApi       = flowablesdk.NewApi(httpclient.DELETE, detailUrl, flowablesdk.ProcessPrefix)
 	ListIdentityApi = flowablesdk.NewApi(httpclient.GET, identityUrl, flowablesdk.ProcessPrefix)
+	BinaryDataApi   = flowablesdk.NewApi(httpclient.GET, binaryDataUrl, flowablesdk.ProcessPrefix)
 )

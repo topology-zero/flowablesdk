@@ -64,3 +64,16 @@ func TestListIdentity(t *testing.T) {
 	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
 	fmt.Println(string(jsonStr))
 }
+
+func TestBinaryData(t *testing.T) {
+	req := ListRequest{}
+	req.Start = 0
+	data, err := BinaryData(id, "")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
+	fmt.Println(string(jsonStr))
+}

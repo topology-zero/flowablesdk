@@ -6,6 +6,7 @@ import (
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/common"
+	"github.com/MasterJoyHunan/flowablesdk/identity"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
 	"github.com/MasterJoyHunan/flowablesdk/variables"
 )
@@ -67,8 +68,8 @@ func Delete(processInstanceId string) error {
 	return err
 }
 
-// ListIdentity 删除单个流程实例历史相关用户
-func ListIdentity(processInstanceId string) (resp []IdentityResponse, err error) {
+// ListIdentity 单个流程实例历史相关用户
+func ListIdentity(processInstanceId string) (resp []identity.Identity, err error) {
 	request := flowablesdk.GetRequest(ListIdentityApi, processInstanceId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -76,5 +77,12 @@ func ListIdentity(processInstanceId string) (resp []IdentityResponse, err error)
 	}
 
 	err = json.Unmarshal(data, &resp)
+	return
+}
+
+// BinaryData 获取单个流程实例历史二进制文件
+func BinaryData(taskId, variableName string) (data []byte, err error) {
+	request := flowablesdk.GetRequest(BinaryDataApi, taskId, variableName)
+	data, err = request.DoHttpRequest()
 	return
 }

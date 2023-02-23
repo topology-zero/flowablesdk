@@ -5,6 +5,7 @@ import (
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/common"
+	"github.com/MasterJoyHunan/flowablesdk/identity"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
 	"github.com/MasterJoyHunan/flowablesdk/variables"
 )
@@ -37,7 +38,7 @@ type HistoryProcessInstancesTask struct {
 	TenantId             string                       `json:"tenantId"`
 }
 
-// List 获取流程实例历史任务
+// List 获取历史任务
 func List(req ListRequest) (list []HistoryProcessInstancesTask, count int, err error) {
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithJson(req))
@@ -57,7 +58,7 @@ func List(req ListRequest) (list []HistoryProcessInstancesTask, count int, err e
 	return
 }
 
-// Detail 获取单个流程实例历史任务
+// Detail 获取单个历史任务
 func Detail(taskId string) (resp HistoryProcessInstancesTask, err error) {
 	request := flowablesdk.GetRequest(DetailApi, taskId)
 	data, err := request.DoHttpRequest()
@@ -69,9 +70,28 @@ func Detail(taskId string) (resp HistoryProcessInstancesTask, err error) {
 	return
 }
 
-// Delete 删除单个流程实例历史任务
+// Delete 删除单个历史任务
 func Delete(taskId string) error {
 	request := flowablesdk.GetRequest(DeleteApi, taskId)
 	_, err := request.DoHttpRequest()
 	return err
+}
+
+// ListIdentity 单个历史任务相关用户
+func ListIdentity(taskId string) (resp []identity.Identity, err error) {
+	request := flowablesdk.GetRequest(ListIdentityApi, taskId)
+	data, err := request.DoHttpRequest()
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(data, &resp)
+	return
+}
+
+// BinaryData 获取单个历史任务二进制文件
+func BinaryData(taskId, variableName string) (data []byte, err error) {
+	request := flowablesdk.GetRequest(BinaryDataApi, taskId, variableName)
+	data, err = request.DoHttpRequest()
+	return
 }

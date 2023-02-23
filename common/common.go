@@ -9,6 +9,12 @@ type ListCommonRequest struct {
 	Size  int    `json:"size,omitempty"`
 }
 
+type WithTenant struct {
+	TenantId        string `json:"tenantId,omitempty"`
+	TenantIdLike    string `json:"tenantIdLike,omitempty"`
+	WithoutTenantId string `json:"withoutTenantId,omitempty"`
+}
+
 type ListCommonResponse struct {
 	Data  json.RawMessage `json:"data"`
 	Total int             `json:"total"`
