@@ -12,7 +12,7 @@ type ListCommonRequest struct {
 type WithTenant struct {
 	TenantId        string `json:"tenantId,omitempty"`
 	TenantIdLike    string `json:"tenantIdLike,omitempty"`
-	WithoutTenantId string `json:"withoutTenantId,omitempty"`
+	WithoutTenantId *bool  `json:"withoutTenantId,omitempty"`
 }
 
 type ListCommonResponse struct {

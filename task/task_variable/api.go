@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	baseUrl       = "/runtime/tasks/%s/variables"
+	baseUrl       = "/runtime/tasks/%s/variable"
 	detailUrl     = baseUrl + "/%s"
 	binaryDataUrl = detailUrl + "/data"
 )

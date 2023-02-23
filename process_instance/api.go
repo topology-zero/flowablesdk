@@ -11,7 +11,7 @@ const (
 	detailUrl         = baseUrl + "/%s"
 	identityUrl       = detailUrl + "/identitylinks"
 	identityDetailUrl = identityUrl + "/users/%s/%s"
-	variablesUrl      = detailUrl + "/variables"
+	variablesUrl      = detailUrl + "/variable"
 	variableDetailUrl = variablesUrl + "/%s"
 )
 

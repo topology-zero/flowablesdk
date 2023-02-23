@@ -1,4 +1,4 @@
-package history_task_instances
+package history_variable_instance
 
 import (
 	"encoding/json"
@@ -6,15 +6,15 @@ import (
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/common"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
-	"github.com/MasterJoyHunan/flowablesdk/variables"
+	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
 type HistoryVariableInstance struct {
-	Id                 string                     `json:"id"`
-	ProcessInstanceId  string                     `json:"processInstanceId"`
-	ProcessInstanceUrl string                     `json:"processInstanceUrl"`
-	TaskId             string                     `json:"taskId"`
-	Variable           variables.VariableResponse `json:"variable"`
+	Id                 string                    `json:"id"`
+	ProcessInstanceId  string                    `json:"processInstanceId"`
+	ProcessInstanceUrl string                    `json:"processInstanceUrl"`
+	TaskId             string                    `json:"taskId"`
+	Variable           variable.VariableResponse `json:"variable"`
 }
 
 // List 获取流程历史变量

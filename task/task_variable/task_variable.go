@@ -5,11 +5,11 @@ import (
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
-	"github.com/MasterJoyHunan/flowablesdk/variables"
+	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
 // List 获取任务的所有变量
-func List(taskId string, scope ...string) (resp []variables.Variable, err error) {
+func List(taskId string, scope ...string) (resp []variable.Variable, err error) {
 	request := flowablesdk.GetRequest(ListApi, taskId)
 	query := map[string]string{}
 
@@ -28,7 +28,7 @@ func List(taskId string, scope ...string) (resp []variables.Variable, err error)
 }
 
 // Detail 获取任务的单个变量
-func Detail(taskId, variableName string, scope ...string) (resp variables.Variable, err error) {
+func Detail(taskId, variableName string, scope ...string) (resp variable.Variable, err error) {
 	request := flowablesdk.GetRequest(DetailApi, taskId, variableName)
 	query := map[string]string{}
 
@@ -60,7 +60,7 @@ func DetailBinary(taskId, variableName string, scope ...string) (data []byte, er
 }
 
 // Add 为任务添加变量 (多个)
-func Add(taskId string, variables []variables.VariableRequest) (resp []variables.Variable, err error) {
+func Add(taskId string, variables []variable.VariableRequest) (resp []variable.Variable, err error) {
 	request := flowablesdk.GetRequest(AddApi, taskId)
 	request.With(httpclient.WithJson(variables))
 	data, err := request.DoHttpRequest()
@@ -73,7 +73,7 @@ func Add(taskId string, variables []variables.VariableRequest) (resp []variables
 }
 
 // AddBinary 为任务添加文件 (单个)
-func AddBinary(taskId string, req variables.FileVariableRequest) (resp variables.Variable, err error) {
+func AddBinary(taskId string, req variable.FileVariableRequest) (resp variable.Variable, err error) {
 	request := flowablesdk.GetRequest(AddApi, taskId)
 	maps := map[string]string{
 		"name": req.VariableName,
@@ -99,7 +99,7 @@ func AddBinary(taskId string, req variables.FileVariableRequest) (resp variables
 }
 
 // Update 为任务修改变量 (单个)
-func Update(taskId string, variable variables.VariableRequest) (resp variables.Variable, err error) {
+func Update(taskId string, variable variable.VariableRequest) (resp variable.Variable, err error) {
 	request := flowablesdk.GetRequest(UpdateApi, taskId, variable.Name)
 	request.With(httpclient.WithJson(variable))
 	data, err := request.DoHttpRequest()
@@ -112,7 +112,7 @@ func Update(taskId string, variable variables.VariableRequest) (resp variables.V
 }
 
 // UpdateBinary 为任务修改文件 (单个)
-func UpdateBinary(taskId string, req variables.FileVariableRequest) (resp variables.Variable, err error) {
+func UpdateBinary(taskId string, req variable.FileVariableRequest) (resp variable.Variable, err error) {
 	request := flowablesdk.GetRequest(UpdateApi, taskId, req.VariableName)
 	maps := map[string]string{
 		"name": req.VariableName,

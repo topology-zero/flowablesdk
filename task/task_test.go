@@ -109,7 +109,7 @@ func TestAction(t *testing.T) {
 		//	deploymentId: id,
 		//	req: ActionRequest{
 		//		Action: "complete",
-		//		Variables: []variables.VariableRequest{
+		//		Variables: []variable.VariableRequest{
 		//			{
 		//				VariableName:  "approved",
 		//				Type:  "boolean",

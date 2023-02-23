@@ -9,7 +9,7 @@ import (
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/candidate"
-	"github.com/MasterJoyHunan/flowablesdk/variables"
+	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
 //go:embed js.png
@@ -182,7 +182,7 @@ func TestListVariables(t *testing.T) {
 }
 
 func TestAddVariables(t *testing.T) {
-	data, err := AddVariables(id, []variables.VariableRequest{
+	data, err := AddVariables(id, []variable.VariableRequest{
 		{
 			Name:  "XXX",
 			Type:  "string",
@@ -198,7 +198,7 @@ func TestAddVariables(t *testing.T) {
 }
 
 func TestUpdateVariables(t *testing.T) {
-	data, err := UpdateVariables(id, []variables.VariableRequest{
+	data, err := UpdateVariables(id, []variable.VariableRequest{
 		{
 			Name:  "XXX",
 			Type:  "integer",
@@ -214,7 +214,7 @@ func TestUpdateVariables(t *testing.T) {
 }
 
 func TestUpdateVariable(t *testing.T) {
-	data, err := UpdateVariable(id, "XXX", variables.VariableRequest{
+	data, err := UpdateVariable(id, "XXX", variable.VariableRequest{
 		Name:  "XXX",
 		Type:  "integer",
 		Value: 11238,
@@ -238,7 +238,7 @@ func TestVariableDetail(t *testing.T) {
 }
 
 func TestAddFileVariable(t *testing.T) {
-	data, err := AddFileVariable(id, variables.FileVariableRequest{
+	data, err := AddFileVariable(id, variable.FileVariableRequest{
 		VariableName: "costomFile2",
 		FileName:     "js.png",
 		Value:        strings.NewReader(png),
@@ -252,7 +252,7 @@ func TestAddFileVariable(t *testing.T) {
 }
 
 func TestUpdateFileVariable(t *testing.T) {
-	data, err := UpdateFileVariable(id, variables.FileVariableRequest{
+	data, err := UpdateFileVariable(id, variable.FileVariableRequest{
 		VariableName: "costomFile",
 		FileName:     "js.png",
 		Value:        strings.NewReader(png2),

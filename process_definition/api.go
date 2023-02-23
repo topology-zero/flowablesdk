@@ -9,7 +9,7 @@ const (
 	baseUrl            = "/repository/process-definitions"
 	detailUrl          = baseUrl + "/%s"
 	ResourceContentUrl = detailUrl + "/resourcedata"
-	ModelUrl           = detailUrl + "/model"
+	ModelUrl           = detailUrl + "/models"
 	CandidateUrl       = detailUrl + "/identitylinks"
 	CandidateDetailUrl = CandidateUrl + "/%s/%s"
 )

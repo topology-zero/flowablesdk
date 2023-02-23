@@ -1,4 +1,4 @@
-package history_task_instances
+package history_detail
 
 import (
 	"github.com/MasterJoyHunan/flowablesdk"

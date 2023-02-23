@@ -8,44 +8,44 @@ import (
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/common"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
-	"github.com/MasterJoyHunan/flowablesdk/variables"
+	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
-type Tasks struct {
-	Id                        string               `json:"id"`
-	Url                       string               `json:"url"`
-	Owner                     string               `json:"owner"`
-	Assignee                  string               `json:"assignee"`
-	DelegationState           string               `json:"delegationState"`
-	Name                      string               `json:"name"`
-	Description               string               `json:"description"`
-	CreateTime                *time.Time           `json:"createTime"`
-	DueDate                   *time.Time           `json:"dueDate"`
-	Priority                  int                  `json:"priority"`
-	Suspended                 bool                 `json:"suspended"`
-	ClaimTime                 *time.Time           `json:"claimTime"`
-	TaskDefinitionKey         string               `json:"taskDefinitionKey"`
-	ScopeDefinitionId         string               `json:"scopeDefinitionId"`
-	ScopeId                   string               `json:"scopeId"`
-	SubScopeId                string               `json:"subScopeId"`
-	ScopeType                 string               `json:"scopeType"`
-	PropagatedStageInstanceId string               `json:"propagatedStageInstanceId"`
-	TenantId                  string               `json:"tenantId"`
-	Category                  string               `json:"category"`
-	FormKey                   string               `json:"formKey"`
-	ParentTaskId              string               `json:"parentTaskId"`
-	ParentTaskUrl             string               `json:"parentTaskUrl"`
-	ExecutionId               string               `json:"executionId"`
-	ExecutionUrl              string               `json:"executionUrl"`
-	ProcessInstanceId         string               `json:"processInstanceId"`
-	ProcessInstanceUrl        string               `json:"processInstanceUrl"`
-	ProcessDefinitionId       string               `json:"processDefinitionId"`
-	ProcessDefinitionUrl      string               `json:"processDefinitionUrl"`
-	Variables                 []variables.Variable `json:"variables"`
+type Task struct {
+	Id                        string              `json:"id"`
+	Url                       string              `json:"url"`
+	Owner                     string              `json:"owner"`
+	Assignee                  string              `json:"assignee"`
+	DelegationState           string              `json:"delegationState"`
+	Name                      string              `json:"name"`
+	Description               string              `json:"description"`
+	CreateTime                *time.Time          `json:"createTime"`
+	DueDate                   *time.Time          `json:"dueDate"`
+	Priority                  int                 `json:"priority"`
+	Suspended                 bool                `json:"suspended"`
+	ClaimTime                 *time.Time          `json:"claimTime"`
+	TaskDefinitionKey         string              `json:"taskDefinitionKey"`
+	ScopeDefinitionId         string              `json:"scopeDefinitionId"`
+	ScopeId                   string              `json:"scopeId"`
+	SubScopeId                string              `json:"subScopeId"`
+	ScopeType                 string              `json:"scopeType"`
+	PropagatedStageInstanceId string              `json:"propagatedStageInstanceId"`
+	TenantId                  string              `json:"tenantId"`
+	Category                  string              `json:"category"`
+	FormKey                   string              `json:"formKey"`
+	ParentTaskId              string              `json:"parentTaskId"`
+	ParentTaskUrl             string              `json:"parentTaskUrl"`
+	ExecutionId               string              `json:"executionId"`
+	ExecutionUrl              string              `json:"executionUrl"`
+	ProcessInstanceId         string              `json:"processInstanceId"`
+	ProcessInstanceUrl        string              `json:"processInstanceUrl"`
+	ProcessDefinitionId       string              `json:"processDefinitionId"`
+	ProcessDefinitionUrl      string              `json:"processDefinitionUrl"`
+	Variables                 []variable.Variable `json:"variable"`
 }
 
 // List 获取任务列表
-func List(req ListRequest) (list []Tasks, count int, err error) {
+func List(req ListRequest) (list []Task, count int, err error) {
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
@@ -65,7 +65,7 @@ func List(req ListRequest) (list []Tasks, count int, err error) {
 }
 
 // Detail 获取任务详情
-func Detail(taskId string) (resp Tasks, err error) {
+func Detail(taskId string) (resp Task, err error) {
 	request := flowablesdk.GetRequest(DetailApi, taskId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -77,7 +77,7 @@ func Detail(taskId string) (resp Tasks, err error) {
 }
 
 // Update 编辑任务
-func Update(taskId string, req UpdateRequest) (resp Tasks, err error) {
+func Update(taskId string, req UpdateRequest) (resp Task, err error) {
 	request := flowablesdk.GetRequest(UpdateApi, taskId)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
@@ -94,7 +94,7 @@ func Update(taskId string, req UpdateRequest) (resp Tasks, err error) {
 // 完成任务:Complete a task
 //{
 //  "action" : "complete",
-//  "variables" : []
+//  "variable" : []
 //}
 //
 // 领取任务:Claim a task

@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/MasterJoyHunan/flowablesdk"
-	"github.com/MasterJoyHunan/flowablesdk/variables"
+	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
 func TestMain(m *testing.M) {
@@ -56,7 +56,7 @@ func TestDetailBinary(t *testing.T) {
 }
 
 func TestAdd(t *testing.T) {
-	data, err := Add(id, []variables.VariableRequest{
+	data, err := Add(id, []variable.VariableRequest{
 		{
 			Name:  "test1",
 			Type:  "string",
@@ -78,7 +78,7 @@ func TestAdd(t *testing.T) {
 }
 
 func TestAddBinary(t *testing.T) {
-	data, err := AddBinary(id, variables.FileVariableRequest{
+	data, err := AddBinary(id, variable.FileVariableRequest{
 		VariableName: "file",
 		FileName:     "_js3.png",
 		Value:        bytes.NewReader(image1),
@@ -93,7 +93,7 @@ func TestAddBinary(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	data, err := Update(id, variables.VariableRequest{
+	data, err := Update(id, variable.VariableRequest{
 		Name:  "test1",
 		Type:  "string",
 		Value: "fuck ",
@@ -108,7 +108,7 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestUpdateBinary(t *testing.T) {
-	data, err := UpdateBinary(id, variables.FileVariableRequest{
+	data, err := UpdateBinary(id, variable.FileVariableRequest{
 		VariableName: "file",
 		FileName:     "_js4.png",
 		Value:        bytes.NewReader(image2),

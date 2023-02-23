@@ -29,7 +29,7 @@ func MakeCommonQuery(req ListCommonRequest, tenant WithTenant, query map[string]
 		query["tenantIdLike"] = tenant.TenantIdLike
 	}
 
-	if len(tenant.WithoutTenantId) > 0 {
-		query["withoutTenantId"] = tenant.WithoutTenantId
+	if *tenant.WithoutTenantId {
+		query["withoutTenantId"] = "true"
 	}
 }

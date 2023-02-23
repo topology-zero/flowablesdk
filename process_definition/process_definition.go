@@ -158,7 +158,7 @@ func ResourceContent(deploymentId string) (resp string, err error) {
 	return string(data), nil
 }
 
-// Model 获取流程的 BPMN model
+// Model 获取流程的 BPMN models
 func Model(deploymentId string) (resp map[string]any, err error) {
 	request := flowablesdk.GetRequest(ModelApi, deploymentId)
 	data, err := request.DoHttpRequest()

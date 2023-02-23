@@ -1,4 +1,4 @@
-package history_task_instances
+package history_detail
 
 import (
 	"encoding/json"
@@ -6,23 +6,23 @@ import (
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/common"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
-	"github.com/MasterJoyHunan/flowablesdk/variables"
+	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
 type HistoryDetail struct {
-	Id                 string                     `json:"id"`
-	ProcessInstanceId  string                     `json:"processInstanceId"`
-	ProcessInstanceUrl string                     `json:"processInstanceUrl"`
-	ExecutionId        string                     `json:"executionId"`
-	ActivityInstanceId string                     `json:"activityInstanceId"`
-	TaskId             string                     `json:"taskId"`
-	TaskUrl            string                     `json:"taskUrl"`
-	Time               string                     `json:"time"`
-	DetailType         string                     `json:"detailType"`
-	Revision           string                     `json:"revision"`
-	PropertyId         string                     `json:"propertyId"`
-	PropertyValue      string                     `json:"propertyValue"`
-	Variable           variables.VariableResponse `json:"variable"`
+	Id                 string                    `json:"id"`
+	ProcessInstanceId  string                    `json:"processInstanceId"`
+	ProcessInstanceUrl string                    `json:"processInstanceUrl"`
+	ExecutionId        string                    `json:"executionId"`
+	ActivityInstanceId string                    `json:"activityInstanceId"`
+	TaskId             string                    `json:"taskId"`
+	TaskUrl            string                    `json:"taskUrl"`
+	Time               string                    `json:"time"`
+	DetailType         string                    `json:"detailType"`
+	Revision           string                    `json:"revision"`
+	PropertyId         string                    `json:"propertyId"`
+	PropertyValue      string                    `json:"propertyValue"`
+	Variable           variable.VariableResponse `json:"variable"`
 }
 
 // List 获取流程历史变量
