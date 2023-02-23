@@ -13,13 +13,22 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-const id = "holidayRequest:1:87b41669-228e-11ed-bae2-0242ac1b0002"
+const id = "Process_1677032402556:1:7c716b23-b257-11ed-b3e2-38f3ab6b92c1"
 
-func TestProcess_List(t *testing.T) {
-	var d Process
-	data, err := d.List(ListRequest{
-		Category: "http://www.flowable.org/processdef",
-	})
+func TestList(t *testing.T) {
+	data, count, err := List(ListRequest{})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
+	fmt.Println(string(jsonStr))
+	fmt.Println()
+	fmt.Println(count)
+}
+
+func TestDetail(t *testing.T) {
+	data, err := Detail(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -28,19 +37,7 @@ func TestProcess_List(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestProcess_Detail(t *testing.T) {
-	var d Process
-	data, err := d.Detail(id)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
-	fmt.Println(string(jsonStr))
-}
-
-func TestProcess_Update(t *testing.T) {
-	var d Process
+func TestUpdate(t *testing.T) {
 
 	type args struct {
 		deploymentId string
@@ -68,7 +65,7 @@ func TestProcess_Update(t *testing.T) {
 		},
 	}
 	for _, v := range tests {
-		data, err := d.Update(v.deploymentId, v.req)
+		data, err := Update(v.deploymentId, v.req)
 		if err != nil {
 			t.Error(err)
 			return
@@ -79,9 +76,8 @@ func TestProcess_Update(t *testing.T) {
 
 }
 
-func TestProcess_ResourceContent(t *testing.T) {
-	var d Process
-	data, err := d.ResourceContent(id)
+func TestResourceContent(t *testing.T) {
+	data, err := ResourceContent(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -89,9 +85,8 @@ func TestProcess_ResourceContent(t *testing.T) {
 	fmt.Println(data)
 }
 
-func TestProcess_Model(t *testing.T) {
-	var d Process
-	data, err := d.Model(id)
+func TestModel(t *testing.T) {
+	data, err := Model(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -101,9 +96,8 @@ func TestProcess_Model(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestProcess_Candidate(t *testing.T) {
-	var d Process
-	data, err := d.ListCandidate(id)
+func TestCandidate(t *testing.T) {
+	data, err := ListCandidate(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -113,8 +107,7 @@ func TestProcess_Candidate(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestProcess_AddCandidate(t *testing.T) {
-	var d Process
+func TestAddCandidate(t *testing.T) {
 
 	type args struct {
 		deploymentId string
@@ -145,7 +138,7 @@ func TestProcess_AddCandidate(t *testing.T) {
 		},
 	}
 	for _, v := range tests {
-		data, err := d.AddCandidate(v.deploymentId, v.req)
+		data, err := AddCandidate(v.deploymentId, v.req)
 		if err != nil {
 			t.Error(err)
 			return
@@ -155,9 +148,8 @@ func TestProcess_AddCandidate(t *testing.T) {
 	}
 }
 
-func TestProcess_DeleteCandidate(t *testing.T) {
-	var d Process
-	err := d.DeleteCandidate(id, DeleteCandidateRequest{
+func TestDeleteCandidate(t *testing.T) {
+	err := DeleteCandidate(id, DeleteCandidateRequest{
 		Family:      "users",
 		CandidateId: "ajax",
 	})
@@ -169,9 +161,8 @@ func TestProcess_DeleteCandidate(t *testing.T) {
 	fmt.Println("delete success")
 }
 
-func TestProcess_CandidateDetail(t *testing.T) {
-	var d Process
-	data, err := d.CandidateDetail(id, DeleteCandidateRequest{
+func TestCandidateDetail(t *testing.T) {
+	data, err := CandidateDetail(id, DeleteCandidateRequest{
 		Family:      "users",
 		CandidateId: "ajax",
 	})

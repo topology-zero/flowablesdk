@@ -12,3 +12,9 @@ type Comment struct {
 	TaskId             string    `json:"taskId"`
 	ProcessInstanceId  string    `json:"processInstanceId"`
 }
+
+type AddComment struct {
+	Message               string `json:"message"`
+	SaveProcessInstanceId bool   `json:"saveProcessInstanceId"`
+	UserId                string `json:"-"`
+}

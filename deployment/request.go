@@ -4,8 +4,11 @@ import "github.com/MasterJoyHunan/flowablesdk/common"
 
 type ListRequest struct {
 	common.ListCommonRequest
-	Name     string
-	Category string
+	Name              string
+	NameLike          string
+	Category          string
+	CategoryNotEquals string
+	common.WithTenant
 }
 
 type CreateRequest struct {

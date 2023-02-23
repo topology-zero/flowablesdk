@@ -7,13 +7,17 @@ import (
 
 type ListRequest struct {
 	common.ListCommonRequest
-	Id                   string
-	ProcessDefinitionKey string
-	ProcessDefinitionId  string
-	BusinessKey          string
-	InvolvedUser         string
-	Suspended            *bool
-	TenantId             string
+	Id                      string `json:"id,omitempty"`
+	ProcessDefinitionKey    string `json:"processDefinitionKey,omitempty"`
+	ProcessDefinitionId     string `json:"processDefinitionId,omitempty"`
+	BusinessKey             string `json:"businessKey,omitempty"`
+	InvolvedUser            string `json:"involvedUser,omitempty"`
+	Suspended               *bool  `json:"suspended,omitempty"`
+	SuperProcessInstanceId  string `json:"superProcessInstanceId,omitempty"`
+	SubProcessInstanceId    string `json:"subProcessInstanceId,omitempty"`
+	ExcludeSubprocesses     *bool  `json:"excludeSubprocesses,omitempty"`
+	IncludeProcessVariables *bool  `json:"includeProcessVariables,omitempty"`
+	common.WithTenant
 }
 
 type UpdateRequest struct {

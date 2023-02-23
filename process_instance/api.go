@@ -7,6 +7,7 @@ import (
 
 const (
 	baseUrl           = "/runtime/process-instances"
+	queryUrl          = "/query/process-instances"
 	detailUrl         = baseUrl + "/%s"
 	identityUrl       = detailUrl + "/identitylinks"
 	identityDetailUrl = identityUrl + "/users/%s/%s"
@@ -15,7 +16,7 @@ const (
 )
 
 var (
-	ListApi            = flowablesdk.NewApi(httpclient.GET, baseUrl, flowablesdk.ProcessPrefix)
+	ListApi            = flowablesdk.NewApi(httpclient.POST, queryUrl, flowablesdk.ProcessPrefix)
 	DetailApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
 	UpdateApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
 	DeleteApi          = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)

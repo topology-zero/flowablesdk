@@ -1,6 +1,9 @@
 package attachment
 
-import "time"
+import (
+	"io"
+	"time"
+)
 
 type Attachment struct {
 	Id                 string    `json:"id"`
@@ -14,4 +17,13 @@ type Attachment struct {
 	ExternalUrl        string    `json:"externalUrl"`
 	ContentUrl         string    `json:"contentUrl"`
 	Time               time.Time `json:"time"`
+}
+
+type AddAttachment struct {
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Type        string    `json:"type"`
+	ExternalUrl string    `json:"externalUrl"`
+	File        io.Reader `json:"-"`
+	UserId      string    `json:"-"`
 }

@@ -10,10 +10,10 @@ type VariableRequest struct {
 }
 
 type FileVariableRequest struct {
-	Name     string
-	FileName string
-	Scope    string // task 使用
-	Value    io.Reader
+	VariableName string
+	FileName     string
+	Scope        string // task 使用
+	Value        io.Reader
 }
 
 type VariableSearchRequest struct {

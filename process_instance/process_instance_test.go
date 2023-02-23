@@ -23,11 +23,22 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-const id = "e4051d55-21b9-11ed-b5b7-0242ac140002"
+const id = "1786d504-b255-11ed-b3e2-38f3ab6b92c1"
 
-func TestInstance_List(t *testing.T) {
-	var d Instance
-	data, err := d.List(ListRequest{})
+func TestList(t *testing.T) {
+	data, count, err := List(ListRequest{})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
+	fmt.Println(string(jsonStr))
+	fmt.Println()
+	fmt.Println(count)
+}
+
+func TestDetail(t *testing.T) {
+	data, err := Detail(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -36,20 +47,8 @@ func TestInstance_List(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_Detail(t *testing.T) {
-	var d Instance
-	data, err := d.Detail(id)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
-	fmt.Println(string(jsonStr))
-}
-
-func TestInstance_Update(t *testing.T) {
-	var d Instance
-	data, err := d.Update(id, UpdateRequest{
+func TestUpdate(t *testing.T) {
+	data, err := Update(id, UpdateRequest{
 		Action: "suspend",
 	})
 
@@ -60,7 +59,7 @@ func TestInstance_Update(t *testing.T) {
 	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
 	fmt.Println(string(jsonStr))
 
-	data, err = d.Update(id, UpdateRequest{
+	data, err = Update(id, UpdateRequest{
 		Action: "activate",
 	})
 
@@ -72,9 +71,8 @@ func TestInstance_Update(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_Delete(t *testing.T) {
-	var d Instance
-	err := d.Delete(id)
+func TestDelete(t *testing.T) {
+	err := Delete(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -82,9 +80,8 @@ func TestInstance_Delete(t *testing.T) {
 	fmt.Println("delete sucess")
 }
 
-func TestInstance_Start(t *testing.T) {
-	var d Instance
-	data, err := d.Start(StartProcessRequest{
+func TestStart(t *testing.T) {
+	data, err := Start(StartProcessRequest{
 		ProcessDefinitionId:  "",
 		ProcessDefinitionKey: "holidayRequest",
 		Message:              "",
@@ -100,9 +97,8 @@ func TestInstance_Start(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_ListCandidate(t *testing.T) {
-	var d Instance
-	data, err := d.ListCandidate(id)
+func TestListCandidate(t *testing.T) {
+	data, err := ListCandidate(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -111,8 +107,7 @@ func TestInstance_ListCandidate(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_AddCandidate(t *testing.T) {
-	var d Instance
+func TestAddCandidate(t *testing.T) {
 	type args struct {
 		InstanceId string
 		req        candidate.Candidate
@@ -134,7 +129,7 @@ func TestInstance_AddCandidate(t *testing.T) {
 		},
 	}
 	for _, v := range tests {
-		data, err := d.AddCandidate(v.InstanceId, v.req)
+		data, err := AddCandidate(v.InstanceId, v.req)
 		if err != nil {
 			t.Error(err)
 			return
@@ -145,8 +140,7 @@ func TestInstance_AddCandidate(t *testing.T) {
 	}
 }
 
-func TestInstance_DeleteCandidate(t *testing.T) {
-	var d Instance
+func TestDeleteCandidate(t *testing.T) {
 	type args struct {
 		InstanceId string
 		req        candidate.Candidate
@@ -168,7 +162,7 @@ func TestInstance_DeleteCandidate(t *testing.T) {
 		},
 	}
 	for _, v := range tests {
-		err := d.DeleteCandidate(v.InstanceId, v.req)
+		err := DeleteCandidate(v.InstanceId, v.req)
 		if err != nil {
 			t.Error(err)
 			return
@@ -177,9 +171,8 @@ func TestInstance_DeleteCandidate(t *testing.T) {
 	}
 }
 
-func TestInstance_ListVariables(t *testing.T) {
-	var d Instance
-	data, err := d.ListVariables(id)
+func TestListVariables(t *testing.T) {
+	data, err := ListVariables(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -188,9 +181,8 @@ func TestInstance_ListVariables(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_AddVariables(t *testing.T) {
-	var d Instance
-	data, err := d.AddVariables(id, []variables.VariableRequest{
+func TestAddVariables(t *testing.T) {
+	data, err := AddVariables(id, []variables.VariableRequest{
 		{
 			Name:  "XXX",
 			Type:  "string",
@@ -205,9 +197,8 @@ func TestInstance_AddVariables(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_UpdateVariables(t *testing.T) {
-	var d Instance
-	data, err := d.UpdateVariables(id, []variables.VariableRequest{
+func TestUpdateVariables(t *testing.T) {
+	data, err := UpdateVariables(id, []variables.VariableRequest{
 		{
 			Name:  "XXX",
 			Type:  "integer",
@@ -222,9 +213,8 @@ func TestInstance_UpdateVariables(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_UpdateVariable(t *testing.T) {
-	var d Instance
-	data, err := d.UpdateVariable(id, "XXX", variables.VariableRequest{
+func TestUpdateVariable(t *testing.T) {
+	data, err := UpdateVariable(id, "XXX", variables.VariableRequest{
 		Name:  "XXX",
 		Type:  "integer",
 		Value: 11238,
@@ -237,9 +227,8 @@ func TestInstance_UpdateVariable(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_VariableDetail(t *testing.T) {
-	var d Instance
-	data, err := d.VariableDetail(id, "XXX")
+func TestVariableDetail(t *testing.T) {
+	data, err := VariableDetail(id, "XXX")
 	if err != nil {
 		t.Error(err)
 		return
@@ -248,12 +237,11 @@ func TestInstance_VariableDetail(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_AddFileVariable(t *testing.T) {
-	var d Instance
-	data, err := d.AddFileVariable(id, variables.FileVariableRequest{
-		Name:     "costomFile2",
-		FileName: "js.png",
-		Value:    strings.NewReader(png),
+func TestAddFileVariable(t *testing.T) {
+	data, err := AddFileVariable(id, variables.FileVariableRequest{
+		VariableName: "costomFile2",
+		FileName:     "js.png",
+		Value:        strings.NewReader(png),
 	})
 	if err != nil {
 		t.Error(err)
@@ -263,12 +251,11 @@ func TestInstance_AddFileVariable(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestInstance_UpdateFileVariable(t *testing.T) {
-	var d Instance
-	data, err := d.UpdateFileVariable(id, variables.FileVariableRequest{
-		Name:     "costomFile",
-		FileName: "js.png",
-		Value:    strings.NewReader(png2),
+func TestUpdateFileVariable(t *testing.T) {
+	data, err := UpdateFileVariable(id, variables.FileVariableRequest{
+		VariableName: "costomFile",
+		FileName:     "js.png",
+		Value:        strings.NewReader(png2),
 	})
 	if err != nil {
 		t.Error(err)

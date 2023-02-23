@@ -1,4 +1,4 @@
-package task
+package task_comment
 
 import (
 	"github.com/MasterJoyHunan/flowablesdk"
@@ -6,15 +6,13 @@ import (
 )
 
 const (
-	baseUrl   = "/runtime/tasks"
-	queryUrl  = "/query/tasks"
+	baseUrl   = "/runtime/tasks/%s/comments"
 	detailUrl = baseUrl + "/%s"
 )
 
 var (
-	ListApi   = flowablesdk.NewApi(httpclient.POST, queryUrl, flowablesdk.ProcessPrefix)
+	ListApi   = flowablesdk.NewApi(httpclient.GET, baseUrl, flowablesdk.ProcessPrefix)
 	DetailApi = flowablesdk.NewApi(httpclient.GET, detailUrl, flowablesdk.ProcessPrefix)
-	UpdateApi = flowablesdk.NewApi(httpclient.PUT, detailUrl, flowablesdk.ProcessPrefix)
-	ActionApi = flowablesdk.NewApi(httpclient.POST, detailUrl, flowablesdk.ProcessPrefix)
+	AddApi    = flowablesdk.NewApi(httpclient.POST, baseUrl, flowablesdk.ProcessPrefix)
 	DeleteApi = flowablesdk.NewApi(httpclient.DELETE, detailUrl, flowablesdk.ProcessPrefix)
 )

@@ -21,7 +21,7 @@ func List(processInstanceId string) (resp []comment.Comment, err error) {
 }
 
 // Add 单个流程实例历史相关备注
-func Add(processInstanceId string, req AddRequest) (resp comment.Comment, err error) {
+func Add(processInstanceId string, req comment.AddComment) (resp comment.Comment, err error) {
 	request := flowablesdk.GetRequest(AddApi, processInstanceId)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()

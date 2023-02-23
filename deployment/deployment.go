@@ -3,10 +3,10 @@ package deployment
 import (
 	"encoding/json"
 	"errors"
-	"strconv"
 	"strings"
 
 	"github.com/MasterJoyHunan/flowablesdk"
+	"github.com/MasterJoyHunan/flowablesdk/common"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
 )
 
@@ -20,34 +20,26 @@ type Deployment struct {
 }
 
 // List 获取流程定义列表
-func (d Deployment) List(req ListRequest) (resp ListResponse, err error) {
+func List(req ListRequest) (list []Deployment, count int, err error) {
 	query := make(map[string]string)
 
 	if len(req.Name) > 0 {
-		query["nameLike"] = req.Name
+		query["name"] = req.Name
+	}
+
+	if len(req.NameLike) > 0 {
+		query["nameLike"] = req.NameLike
 	}
 
 	if len(req.Category) > 0 {
 		query["category"] = req.Category
 	}
 
-	if len(req.Sort) > 0 {
-		query["sort"] = req.Sort
+	if len(req.CategoryNotEquals) > 0 {
+		query["categoryNotEquals"] = req.CategoryNotEquals
 	}
 
-	if len(req.Order) > 0 {
-		query["order"] = req.Order
-	}
-
-	if req.Start < 0 {
-		req.Start = 0
-	}
-	query["start"] = strconv.Itoa(req.Start)
-
-	if req.Size < 1 {
-		req.Size = 10
-	}
-	query["size"] = strconv.Itoa(req.Size)
+	common.MakeCommonQuery(req.ListCommonRequest, req.WithTenant, query)
 
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithQuery(query))
@@ -56,12 +48,19 @@ func (d Deployment) List(req ListRequest) (resp ListResponse, err error) {
 		return
 	}
 
-	err = json.Unmarshal(data, &resp)
+	var commonData common.ListCommonResponse
+	err = json.Unmarshal(data, &commonData)
+	if err != nil {
+		return
+	}
+
+	count = commonData.Total
+	err = json.Unmarshal(commonData.Data, &list)
 	return
 }
 
 // Detail 获取流程定义列表
-func (d Deployment) Detail(deploymentId string) (resp Deployment, err error) {
+func Detail(deploymentId string) (resp Deployment, err error) {
 	request := flowablesdk.GetRequest(DetailApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -73,7 +72,7 @@ func (d Deployment) Detail(deploymentId string) (resp Deployment, err error) {
 }
 
 // Create 创建流程
-func (d Deployment) Create(req CreateRequest) (resp Deployment, err error) {
+func Create(req CreateRequest) (resp Deployment, err error) {
 	if !strings.HasSuffix(req.FileName, ".bpmn20.xml") {
 		err = errors.New("suffix not .bpmn20.xml")
 	}
@@ -95,14 +94,14 @@ func (d Deployment) Create(req CreateRequest) (resp Deployment, err error) {
 }
 
 // Delete 删除流程
-func (d Deployment) Delete(deploymentId string) error {
+func Delete(deploymentId string) error {
 	request := flowablesdk.GetRequest(DeleteApi, deploymentId)
 	_, err := request.DoHttpRequest()
 	return err
 }
 
 // Resource 查看流程资源列表
-func (d Deployment) Resource(deploymentId string) (resp []Resource, err error) {
+func Resource(deploymentId string) (resp []ResourceResponse, err error) {
 	request := flowablesdk.GetRequest(ResourceApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -113,7 +112,7 @@ func (d Deployment) Resource(deploymentId string) (resp []Resource, err error) {
 }
 
 // ResourceDetail 查看流程资源详情
-func (d Deployment) ResourceDetail(deploymentId, resourceId string) (resp Resource, err error) {
+func ResourceDetail(deploymentId, resourceId string) (resp ResourceResponse, err error) {
 	request := flowablesdk.GetRequest(ResourceDetailApi, deploymentId, resourceId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -124,7 +123,7 @@ func (d Deployment) ResourceDetail(deploymentId, resourceId string) (resp Resour
 }
 
 // ResourceContent 获取流程定义的xml
-func (d Deployment) ResourceContent(deploymentId, resourceId string) (resp string, err error) {
+func ResourceContent(deploymentId, resourceId string) (resp string, err error) {
 	request := flowablesdk.GetRequest(ResourceContentApi, deploymentId, resourceId)
 	data, err := request.DoHttpRequest()
 	if err != nil {

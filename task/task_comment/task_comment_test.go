@@ -1,4 +1,4 @@
-package history_process_instances
+package task_comment
 
 import (
 	"encoding/json"
@@ -9,31 +9,18 @@ import (
 	"github.com/MasterJoyHunan/flowablesdk/comment"
 )
 
-const (
-	proId     = "1786d504-b255-11ed-b3e2-38f3ab6b92c1"
-	commentId = "d4e5867a-b290-11ed-b3e2-38f3ab6b92c1"
-)
-
 func TestMain(m *testing.M) {
 	flowablesdk.Setup(flowablesdk.Config{Url: "http://127.0.0.1:8080/"})
 	m.Run()
 }
 
+const (
+	id        = "73243e27-b256-11ed-b3e2-38f3ab6b92c1"
+	commentId = "120ae147-b34d-11ed-b7d1-38f3ab6b92c1"
+)
+
 func TestList(t *testing.T) {
-	data, err := List(proId)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-
-	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
-	fmt.Println(string(jsonStr))
-}
-
-func TestAdd(t *testing.T) {
-	data, err := Add(proId, comment.AddComment{
-		Message: "this is test",
-	})
+	data, err := List(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -44,7 +31,21 @@ func TestAdd(t *testing.T) {
 }
 
 func TestDetail(t *testing.T) {
-	data, err := Detail(proId, commentId)
+	data, err := Detail(id, commentId)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
+	fmt.Println(string(jsonStr))
+}
+
+func TestAdd(t *testing.T) {
+	data, err := Add(id, comment.AddComment{
+		Message:               "user comments v2",
+		SaveProcessInstanceId: false,
+	})
 	if err != nil {
 		t.Error(err)
 		return
@@ -55,11 +56,10 @@ func TestDetail(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	err := Delete(proId, commentId)
+	err := Delete(id, commentId)
 	if err != nil {
 		t.Error(err)
 		return
 	}
-
 	fmt.Println("delete success")
 }

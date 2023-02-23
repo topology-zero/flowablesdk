@@ -7,10 +7,11 @@ import (
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/candidate"
+	"github.com/MasterJoyHunan/flowablesdk/common"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
 )
 
-type Process struct {
+type ProcessDefinition struct {
 	Id                       string `json:"id"`
 	Url                      string `json:"url"`
 	Version                  int    `json:"version"`
@@ -28,7 +29,7 @@ type Process struct {
 }
 
 // List 获取流程列表
-func (p Process) List(req ListRequest) (resp ListResponse, err error) {
+func List(req ListRequest) (list []ProcessDefinition, count int, err error) {
 	query := make(map[string]string)
 
 	if req.Version > 0 {
@@ -36,19 +37,39 @@ func (p Process) List(req ListRequest) (resp ListResponse, err error) {
 	}
 
 	if len(req.Name) > 0 {
-		query["nameLike"] = req.Name
+		query["name"] = req.Name
+	}
+
+	if len(req.NameLike) > 0 {
+		query["nameLike"] = req.NameLike
 	}
 
 	if len(req.Key) > 0 {
-		query["keyLike"] = req.Key
+		query["key"] = req.Key
+	}
+
+	if len(req.KeyLike) > 0 {
+		query["keyLike"] = req.KeyLike
 	}
 
 	if len(req.ResourceName) > 0 {
-		query["resourceNameLike"] = req.ResourceName
+		query["resourceName"] = req.ResourceName
+	}
+
+	if len(req.ResourceNameLike) > 0 {
+		query["resourceNameLike"] = req.ResourceNameLike
 	}
 
 	if len(req.Category) > 0 {
 		query["category"] = req.Category
+	}
+
+	if len(req.CategoryLike) > 0 {
+		query["categoryLike"] = req.CategoryLike
+	}
+
+	if len(req.CategoryNotEquals) > 0 {
+		query["categoryNotEquals"] = req.CategoryNotEquals
 	}
 
 	if len(req.DeploymentId) > 0 {
@@ -67,23 +88,7 @@ func (p Process) List(req ListRequest) (resp ListResponse, err error) {
 		query["suspended"] = "true"
 	}
 
-	if len(req.Sort) > 0 {
-		query["sort"] = req.Sort
-	}
-
-	if len(req.Order) > 0 {
-		query["order"] = req.Order
-	}
-
-	if req.Start < 0 {
-		req.Start = 0
-	}
-	query["start"] = strconv.Itoa(req.Start)
-
-	if req.Size < 1 {
-		req.Size = 10
-	}
-	query["size"] = strconv.Itoa(req.Size)
+	common.MakeCommonQuery(req.ListCommonRequest, req.WithTenant, query)
 
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithQuery(query))
@@ -92,12 +97,19 @@ func (p Process) List(req ListRequest) (resp ListResponse, err error) {
 		return
 	}
 
-	err = json.Unmarshal(data, &resp)
+	var commonData common.ListCommonResponse
+	err = json.Unmarshal(data, &commonData)
+	if err != nil {
+		return
+	}
+
+	count = commonData.Total
+	err = json.Unmarshal(commonData.Data, &list)
 	return
 }
 
 // Detail 获取流程详情
-func (p Process) Detail(deploymentId string) (resp Process, err error) {
+func Detail(deploymentId string) (resp ProcessDefinition, err error) {
 	request := flowablesdk.GetRequest(DetailApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -109,38 +121,24 @@ func (p Process) Detail(deploymentId string) (resp Process, err error) {
 }
 
 // Update 更新流程
-func (p Process) Update(deploymentId string, req UpdateRequest) (resp Process, err error) {
+//
+// 更新 category
+// {
+//  "category" : "updatedcategory"
+// }
+//
+// 更新为 Suspend 状态
+// {
+//  "action" : "suspend",
+// }
+//
+// 更新为 activate 状态
+// {
+//  "action" : "activate",
+// }
+func Update(deploymentId string, req UpdateRequest) (resp ProcessDefinition, err error) {
 	request := flowablesdk.GetRequest(UpdateApi, deploymentId)
-
-	query := map[string]any{}
-
-	if len(req.Category) > 0 {
-		query["category"] = req.Category
-	}
-
-	if len(req.Action) > 0 {
-		if req.Action == "activate" || req.Action == "suspend" {
-			query["action"] = req.Action
-		} else {
-			err = errors.New("action is not allow")
-			return
-		}
-	}
-
-	if req.IncludeProcessInstances {
-		query["IncludeProcessInstances"] = req.IncludeProcessInstances
-	}
-
-	if len(req.Date) > 0 {
-		query["date"] = req.Date
-	}
-
-	if len(query) == 0 {
-		err = errors.New("request is empty")
-		return
-	}
-
-	request.With(httpclient.WithJson(query))
+	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
 	if err != nil {
 		return
@@ -151,7 +149,7 @@ func (p Process) Update(deploymentId string, req UpdateRequest) (resp Process, e
 }
 
 // ResourceContent 获取流程的xml
-func (p Process) ResourceContent(deploymentId string) (resp string, err error) {
+func ResourceContent(deploymentId string) (resp string, err error) {
 	request := flowablesdk.GetRequest(ResourceContentApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -161,7 +159,7 @@ func (p Process) ResourceContent(deploymentId string) (resp string, err error) {
 }
 
 // Model 获取流程的 BPMN model
-func (p Process) Model(deploymentId string) (resp map[string]any, err error) {
+func Model(deploymentId string) (resp map[string]any, err error) {
 	request := flowablesdk.GetRequest(ModelApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -172,7 +170,7 @@ func (p Process) Model(deploymentId string) (resp map[string]any, err error) {
 }
 
 // ListCandidate 获取流程所有候选人
-func (p Process) ListCandidate(deploymentId string) (resp []candidate.Candidate, err error) {
+func ListCandidate(deploymentId string) (resp []candidate.Candidate, err error) {
 	request := flowablesdk.GetRequest(ListCandidateApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -183,7 +181,7 @@ func (p Process) ListCandidate(deploymentId string) (resp []candidate.Candidate,
 }
 
 // AddCandidate 流程添加候选人 TODO 需要查找为什么 group 不能使用的问题
-func (p Process) AddCandidate(deploymentId string, req AddCandidateRequest) (resp candidate.Candidate, err error) {
+func AddCandidate(deploymentId string, req AddCandidateRequest) (resp candidate.Candidate, err error) {
 	request := flowablesdk.GetRequest(AddCandidateApi, deploymentId)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()
@@ -195,7 +193,7 @@ func (p Process) AddCandidate(deploymentId string, req AddCandidateRequest) (res
 }
 
 // DeleteCandidate 流程删除候选人
-func (p Process) DeleteCandidate(deploymentId string, req DeleteCandidateRequest) error {
+func DeleteCandidate(deploymentId string, req DeleteCandidateRequest) error {
 	if len(req.Family) == 0 {
 		return errors.New("family is empty")
 	}
@@ -217,7 +215,7 @@ func (p Process) DeleteCandidate(deploymentId string, req DeleteCandidateRequest
 }
 
 // CandidateDetail 查看流程指定候选人
-func (p Process) CandidateDetail(deploymentId string, req DeleteCandidateRequest) (resp candidate.Candidate, err error) {
+func CandidateDetail(deploymentId string, req DeleteCandidateRequest) (resp candidate.Candidate, err error) {
 	if len(req.Family) == 0 {
 		err = errors.New("family is empty")
 		return

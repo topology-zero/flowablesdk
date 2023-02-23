@@ -1,25 +1,35 @@
 package process_definition
 
-import "github.com/MasterJoyHunan/flowablesdk/common"
+import (
+	"time"
+
+	"github.com/MasterJoyHunan/flowablesdk/common"
+)
 
 type ListRequest struct {
 	common.ListCommonRequest
-	Version         int
-	Name            string
-	Key             string
-	ResourceName    string
-	Category        string
-	DeploymentId    string
-	StartableByUser string
-	Latest          bool
-	Suspended       bool
+	Version           int
+	Name              string
+	NameLike          string
+	Key               string
+	KeyLike           string
+	ResourceName      string
+	ResourceNameLike  string
+	Category          string
+	CategoryLike      string
+	CategoryNotEquals string
+	DeploymentId      string
+	StartableByUser   string
+	Latest            bool
+	Suspended         bool
+	common.WithTenant
 }
 
 type UpdateRequest struct {
-	Category                string
-	Action                  string // suspend or activate
-	IncludeProcessInstances bool
-	Date                    string //  2013-04-15T00:42:12Z
+	Action                  string     `json:"action,omitempty"` // suspend or activate
+	Category                string     `json:"category,omitempty"`
+	IncludeProcessInstances bool       `json:"includeProcessInstances,omitempty"`
+	Date                    *time.Time `json:"date,omitempty"` //  2013-04-15T00:42:12Z
 }
 
 type AddCandidateRequest struct {

@@ -1,21 +1,31 @@
-package task
+package task_attachments
 
 import (
+	"bytes"
 	_ "embed"
 	"encoding/json"
 	"fmt"
-	"strings"
 	"testing"
+
+	"github.com/MasterJoyHunan/flowablesdk"
+	"github.com/MasterJoyHunan/flowablesdk/attachment"
 )
 
-//go:embed js3.png
-var file string
+//go:embed _js3.png
+var file []byte
 
-const attachmentsId = "526cc4e9-21f4-11ed-b5b7-0242ac140002"
+func TestMain(m *testing.M) {
+	flowablesdk.Setup(flowablesdk.Config{Url: "http://127.0.0.1:8080/"})
+	m.Run()
+}
 
-func TestTasks_ListAttachments(t *testing.T) {
-	var task Tasks
-	data, err := task.ListAttachments(id)
+const (
+	id           = "73243e27-b256-11ed-b3e2-38f3ab6b92c1"
+	attachmentId = "c59829da-b351-11ed-b7d1-38f3ab6b92c1"
+)
+
+func TestList(t *testing.T) {
+	data, err := List(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -25,9 +35,8 @@ func TestTasks_ListAttachments(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestTasks_AddAttachmentsUrl(t *testing.T) {
-	var task Tasks
-	data, err := task.AddAttachmentsUrl(id, AddAttachmentsUrlRequest{
+func TestAddUrl(t *testing.T) {
+	data, err := AddUrl(id, attachment.AddAttachment{
 		Name:        "Simple attachment",
 		Description: "Simple attachment description",
 		Type:        "simpleType",
@@ -42,13 +51,12 @@ func TestTasks_AddAttachmentsUrl(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestTasks_AddAttachments(t *testing.T) {
-	var task Tasks
-	data, err := task.AddAttachments(id, AddAttachmentsRequest{
+func TestAdd(t *testing.T) {
+	data, err := Add(id, attachment.AddAttachment{
 		Name:        "Simple attachment1",
 		Description: "Simple attachment description1",
 		Type:        "simpleType1",
-		File:        strings.NewReader(file),
+		File:        bytes.NewReader(file),
 	})
 	if err != nil {
 		t.Error(err)
@@ -59,9 +67,8 @@ func TestTasks_AddAttachments(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestTasks_DeleteAttachments(t *testing.T) {
-	var task Tasks
-	err := task.DeleteAttachments(id, attachmentsId, "1")
+func TestDelete(t *testing.T) {
+	err := Delete(id, attachmentId, "1")
 	if err != nil {
 		t.Error(err)
 		return
@@ -70,9 +77,8 @@ func TestTasks_DeleteAttachments(t *testing.T) {
 	fmt.Println("delete success")
 }
 
-func TestTasks_ContentAttachments(t *testing.T) {
-	var task Tasks
-	data, err := task.ContentAttachments(id, "072a57ad-3883-11ed-9f1e-38f3ab6b92c1")
+func TestDetail(t *testing.T) {
+	data, err := Detail(id, attachmentId)
 	if err != nil {
 		t.Error(err)
 		return
