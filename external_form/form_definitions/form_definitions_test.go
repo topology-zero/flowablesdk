@@ -1,4 +1,4 @@
-package definition
+package form_definitions
 
 import (
 	"encoding/json"
@@ -15,10 +15,21 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestExternalFormDefinition_List(t *testing.T) {
-	f := new(ExternalFormDefinition)
-	req := ListRequest{}
-	data, err := f.List(req)
+func TestList(t *testing.T) {
+	data, count, err := List(ListRequest{})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
+	fmt.Println(string(jsonStr))
+	fmt.Println()
+	fmt.Println(count)
+}
+
+func TestDetail(t *testing.T) {
+	data, err := Detail(id)
 	if err != nil {
 		t.Error(err)
 		return
@@ -28,21 +39,8 @@ func TestExternalFormDefinition_List(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestExternalFormDefinition_Detail(t *testing.T) {
-	f := new(ExternalFormDefinition)
-	data, err := f.Detail(id)
-	if err != nil {
-		t.Error(err)
-		return
-	}
-
-	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
-	fmt.Println(string(jsonStr))
-}
-
-func TestExternalFormDeployment_Model(t *testing.T) {
-	f := new(ExternalFormDefinition)
-	data, err := f.Model(id)
+func TestModel(t *testing.T) {
+	data, err := Model(id)
 	if err != nil {
 		t.Error(err)
 		return

@@ -1,4 +1,4 @@
-package instance
+package form_instances
 
 import "github.com/MasterJoyHunan/flowablesdk/common"
 
@@ -13,7 +13,7 @@ type ListRequest struct {
 	ScopeType           string `json:"scopeType,omitempty"`
 	ScopeDefinitionId   string `json:"scopeDefinitionId,omitempty"`
 	SubmittedBy         string `json:"submittedBy,omitempty"`
-	TenantId            string `json:"tenantId,omitempty"`
+	common.WithTenant
 }
 
 type AddRequest struct {

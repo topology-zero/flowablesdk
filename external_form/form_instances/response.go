@@ -1,16 +1,9 @@
-package instance
+package form_instances
 
 import (
 	"github.com/MasterJoyHunan/flowablesdk/external_form/model"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/timefmt"
 )
-
-type ListResponse struct {
-	Data  []ExternalFormInstance `json:"data"`
-	Total int                    `json:"total"`
-	Start int                    `json:"start"`
-	Size  int                    `json:"size"`
-}
 
 type FormInstanceModelResponse struct {
 	Id                  string        `json:"id"`

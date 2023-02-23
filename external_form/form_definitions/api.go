@@ -1,4 +1,4 @@
-package definition
+package form_definitions
 
 import (
 	"github.com/MasterJoyHunan/flowablesdk"

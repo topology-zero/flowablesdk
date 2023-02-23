@@ -35,7 +35,7 @@ type EnumValues struct {
 }
 
 // GetFrom 获取 task/processDefinition 的表格
-func (f *Form) GetFrom(req GetFromRequest) (resp Form, err error) {
+func GetFrom(req GetFromRequest) (resp Form, err error) {
 	request := flowablesdk.GetRequest(DetailFromApi)
 
 	query := map[string]string{}
@@ -57,7 +57,7 @@ func (f *Form) GetFrom(req GetFromRequest) (resp Form, err error) {
 }
 
 // SubmitForm 提交 task/processDefinition 的表格
-func (f *Form) SubmitForm(req SubmitFromRequest) (resp SubmitFromResponse, err error) {
+func SubmitForm(req SubmitFromRequest) (resp SubmitFromResponse, err error) {
 	request := flowablesdk.GetRequest(SubmitFromApi)
 	request.With(httpclient.WithJson(req))
 	data, err := request.DoHttpRequest()

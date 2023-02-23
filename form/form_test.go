@@ -15,9 +15,8 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestForm_GetFrom(t *testing.T) {
-	f := new(Form)
-	data, err := f.GetFrom(GetFromRequest{
+func TestGetFrom(t *testing.T) {
+	data, err := GetFrom(GetFromRequest{
 		ProcessDefinitionId: id,
 	})
 
@@ -30,9 +29,8 @@ func TestForm_GetFrom(t *testing.T) {
 	fmt.Println(string(jsonStr))
 }
 
-func TestForm_SubmitForm(t *testing.T) {
-	f := new(Form)
-	data, err := f.SubmitForm(SubmitFromRequest{
+func TestSubmitForm(t *testing.T) {
+	data, err := SubmitForm(SubmitFromRequest{
 		ProcessDefinitionId: id,
 		Properties: []Properties{
 			{

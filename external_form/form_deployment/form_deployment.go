@@ -1,16 +1,16 @@
-package deployment
+package form_deployment
 
 import (
 	"encoding/json"
-	"strconv"
 	"strings"
 	"time"
 
 	"github.com/MasterJoyHunan/flowablesdk"
+	"github.com/MasterJoyHunan/flowablesdk/common"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
 )
 
-type ExternalFormDeployment struct {
+type FormDeployment struct {
 	Id                 string
 	Name               string
 	DeploymentTime     time.Time
@@ -21,38 +21,34 @@ type ExternalFormDeployment struct {
 }
 
 // List 获取外置表单列表
-func (f *ExternalFormDeployment) List(req ListRequest) (resp ListResponse, err error) {
+func List(req ListRequest) (list []FormDeployment, count int, err error) {
 	query := make(map[string]string)
-
-	if len(req.Category) > 0 {
-		query["category"] = req.Category
-	}
 
 	if len(req.Name) > 0 {
 		query["name"] = req.Name
 	}
 
-	if len(req.TenantId) > 0 {
-		query["tenantId"] = req.TenantId
+	if len(req.NameLike) > 0 {
+		query["nameLike"] = req.NameLike
 	}
 
-	if len(req.Sort) > 0 {
-		query["sort"] = req.Sort
+	if len(req.Category) > 0 {
+		query["category"] = req.Category
 	}
 
-	if len(req.Order) > 0 {
-		query["order"] = req.Order
+	if len(req.CategoryNotEquals) > 0 {
+		query["categoryNotEquals"] = req.CategoryNotEquals
 	}
 
-	if req.Start < 0 {
-		req.Start = 0
+	if len(req.ParentDeploymentId) > 0 {
+		query["parentDeploymentId"] = req.ParentDeploymentId
 	}
-	query["start"] = strconv.Itoa(req.Start)
 
-	if req.Size < 1 {
-		req.Size = 10
+	if len(req.ParentDeploymentIdLike) > 0 {
+		query["parentDeploymentIdLike"] = req.ParentDeploymentIdLike
 	}
-	query["size"] = strconv.Itoa(req.Size)
+
+	common.MakeCommonQuery(req.ListCommonRequest, req.WithTenant, query)
 
 	request := flowablesdk.GetRequest(ListApi)
 	request.With(httpclient.WithQuery(query))
@@ -61,12 +57,19 @@ func (f *ExternalFormDeployment) List(req ListRequest) (resp ListResponse, err e
 		return
 	}
 
-	err = json.Unmarshal(data, &resp)
+	var commonData common.ListCommonResponse
+	err = json.Unmarshal(data, &commonData)
+	if err != nil {
+		return
+	}
+
+	count = commonData.Total
+	err = json.Unmarshal(commonData.Data, &list)
 	return
 }
 
 // Add 添加外置表单
-func (f *ExternalFormDeployment) Add(req AddRequest) (resp ExternalFormDeployment, err error) {
+func Add(req AddRequest) (resp FormDeployment, err error) {
 	request := flowablesdk.GetRequest(AddApi)
 	request.With(httpclient.WithMultipartFrom(&httpclient.UploadFile{
 		Field:    "file",
@@ -86,7 +89,7 @@ func (f *ExternalFormDeployment) Add(req AddRequest) (resp ExternalFormDeploymen
 }
 
 // Detail 部署表单详情
-func (f *ExternalFormDeployment) Detail(deploymentId string) (resp ExternalFormDeployment, err error) {
+func Detail(deploymentId string) (resp FormDeployment, err error) {
 	request := flowablesdk.GetRequest(DetailApi, deploymentId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
@@ -98,7 +101,7 @@ func (f *ExternalFormDeployment) Detail(deploymentId string) (resp ExternalFormD
 }
 
 // Delete 删除部署表单
-func (f *ExternalFormDeployment) Delete(deploymentId string) error {
+func Delete(deploymentId string) error {
 	request := flowablesdk.GetRequest(DeleteApi, deploymentId)
 	_, err := request.DoHttpRequest()
 	return err
