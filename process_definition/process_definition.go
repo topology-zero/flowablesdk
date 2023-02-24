@@ -180,7 +180,7 @@ func ListCandidate(deploymentId string) (resp []candidate.Candidate, err error) 
 	return
 }
 
-// AddCandidate 流程添加候选人 TODO 需要查找为什么 group 不能使用的问题
+// AddCandidate 流程添加候选人/候选组
 func AddCandidate(deploymentId string, req AddCandidateRequest) (resp candidate.Candidate, err error) {
 	request := flowablesdk.GetRequest(AddCandidateApi, deploymentId)
 	request.With(httpclient.WithJson(req))

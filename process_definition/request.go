@@ -33,8 +33,8 @@ type UpdateRequest struct {
 }
 
 type AddCandidateRequest struct {
-	User    string `json:"user,omitempty"`
-	GroupId string `json:"groupId,omitempty"`
+	User  string `json:"user,omitempty"`
+	Group string `json:"group,omitempty"`
 }
 
 type DeleteCandidateRequest struct {

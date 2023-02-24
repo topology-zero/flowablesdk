@@ -2,6 +2,7 @@ package execution
 
 import (
 	"encoding/json"
+
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/common"
 	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
@@ -67,9 +68,8 @@ func ListActive(executionId string) (resp []string, err error) {
 
 // Execute execute an action on an execution
 func Execute(executionId string, req ExecuteRequest) (resp []byte, err error) {
-	request := flowablesdk.GetRequest(ActiveApi, executionId)
+	request := flowablesdk.GetRequest(ExecuteApi, executionId)
 	request.With(httpclient.WithJson(req))
-	// TODO 会返回 204
 	// TODO 返回值有可能是 ExecuteResponse, 也有可能是 Execution
 	return request.DoHttpRequest()
 }

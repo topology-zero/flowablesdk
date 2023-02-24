@@ -115,25 +115,18 @@ func TestAddCandidate(t *testing.T) {
 	}
 
 	tests := []args{
-		//{
-		//	deploymentId: id,
-		//	req: AddCandidateRequest{
-		//		User:    "",
-		//		Group: "bobo",
-		//	},
-		//},
 		{
 			deploymentId: id,
 			req: AddCandidateRequest{
-				User:    "joy",
-				GroupId: "",
+				User:  "",
+				Group: "bobo",
 			},
 		},
 		{
 			deploymentId: id,
 			req: AddCandidateRequest{
-				User:    "ajax",
-				GroupId: "ceo",
+				User:  "joy",
+				Group: "",
 			},
 		},
 	}
