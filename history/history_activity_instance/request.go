@@ -1,4 +1,4 @@
-package historic_activity_instance
+package history_activity_instance
 
 import (
 	"github.com/MasterJoyHunan/flowablesdk/common"
