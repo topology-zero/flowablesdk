@@ -14,7 +14,7 @@ func TestMain(m *testing.M) {
 }
 
 const (
-	id       = "73243e27-b256-11ed-b3e2-38f3ab6b92c1"
+	id       = "95b36aeb-b420-11ed-b7d1-38f3ab6b92c1"
 	eventsId = "b57f1602-b34a-11ed-b7d1-38f3ab6b92c1"
 )
 

@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	baseUrl   = "/runtime/tasks/%s/event"
+	baseUrl   = "/runtime/tasks/%s/events"
 	detailUrl = baseUrl + "/%s"
 )
 

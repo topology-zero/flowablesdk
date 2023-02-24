@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	queryUrl = "/query/historic-task-instances"
+	queryUrl = "/query/historic-activity-instances"
 )
 
 var (
