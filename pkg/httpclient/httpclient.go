@@ -101,6 +101,39 @@ func (r *Request) DoHttpRequest() ([]byte, error) {
 	return respStr, nil
 }
 
+func (r *Request) RequestDebug(request *http.Request) {
+	if !r.requestDebug {
+		return
+	}
+
+	log.Println("[", r.method, "]", r.url)
+	if r.method == "GET" {
+		log.Println("query = ", request.URL.RawQuery)
+	} else {
+		ct := request.Header.Get("Content-Type")
+		if strings.HasPrefix(ct, "application/json") {
+			body, _ := ioutil.ReadAll(request.Body)
+			request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+			log.Println("request = ", string(body))
+		} else if strings.HasPrefix(ct, "application/x-www-form-urlencoded") {
+			request.ParseForm()
+			log.Println("request = ", request.PostForm.Encode())
+		} else if strings.HasPrefix(ct, "multipart/form-data") {
+			request.ParseMultipartForm(10e6)
+			log.Println("request = ", request.PostForm.Encode())
+		} else {
+			log.Println("not debug , Content-Type = ", ct)
+		}
+	}
+}
+
+func (r *Request) ResponseDebug(code int, resp []byte) {
+	if !r.responseDebug {
+		return
+	}
+	log.Printf("code = [%d] reps = %s\n", code, string(resp))
+}
+
 func WithTimeout(d time.Duration) HTTPOption {
 	return func(r *Request) {
 		r.client.Timeout = d
@@ -194,35 +227,4 @@ func ConvertString(value any) string {
 	default:
 		return ""
 	}
-}
-
-func (r *Request) RequestDebug(request *http.Request) {
-	if !r.requestDebug {
-		return
-	}
-	if r.method == "GET" {
-		log.Println("query = ", request.URL.RawQuery)
-	} else {
-		ct := request.Header.Get("Content-Type")
-		if strings.HasPrefix(ct, "application/json") {
-			body, _ := ioutil.ReadAll(request.Body)
-			request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
-			log.Println("request = ", string(body))
-		} else if strings.HasPrefix(ct, "application/x-www-form-urlencoded") {
-			request.ParseForm()
-			log.Println("request = ", request.PostForm.Encode())
-		} else if strings.HasPrefix(ct, "multipart/form-data") {
-			request.ParseMultipartForm(10e6)
-			log.Println("request = ", request.PostForm.Encode())
-		} else {
-			log.Println("not debug , Content-Type = ", ct)
-		}
-	}
-}
-
-func (r *Request) ResponseDebug(code int, resp []byte) {
-	if !r.responseDebug {
-		return
-	}
-	log.Printf("code = [%d] reps = %s\n", code, string(resp))
 }
