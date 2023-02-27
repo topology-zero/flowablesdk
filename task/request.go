@@ -66,9 +66,12 @@ type UpdateRequest struct {
 }
 
 type ActionRequest struct {
-	Action    string                     `json:"action"`
-	Assignee  string                     `json:"assignee,omitempty"`
-	Variables []variable.VariableRequest `json:"variable,omitempty"`
+	Action             string                     `json:"action"`
+	Assignee           string                     `json:"assignee,omitempty"`
+	FormDefinitionId   string                     `json:"formDefinitionId,omitempty"`
+	Outcome            string                     `json:"outcome,omitempty"`
+	Variables          []variable.VariableRequest `json:"variables,omitempty"`
+	TransientVariables []variable.VariableRequest `json:"transientVariables,omitempty"`
 }
 
 type DeleteRequest struct {

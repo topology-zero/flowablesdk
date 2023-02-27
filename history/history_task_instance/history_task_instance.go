@@ -11,31 +11,31 @@ import (
 )
 
 type HistoryProcessInstanceTask struct {
-	Id                   string                      `json:"id"`
-	ProcessDefinitionId  string                      `json:"processDefinitionId"`
-	ProcessDefinitionUrl string                      `json:"processDefinitionUrl"`
-	ProcessInstanceId    string                      `json:"processInstanceId"`
-	ProcessInstanceUrl   string                      `json:"processInstanceUrl"`
-	ExecutionId          string                      `json:"executionId"`
-	Name                 string                      `json:"name"`
-	Description          string                      `json:"description"`
-	DeleteReason         string                      `json:"deleteReason"`
-	Owner                string                      `json:"owner"`
-	Assignee             string                      `json:"assignee"`
-	StartTime            string                      `json:"startTime"`
-	EndTime              string                      `json:"endTime"`
-	DurationInMillis     int                         `json:"durationInMillis"`
-	WorkTimeInMillis     int                         `json:"workTimeInMillis"`
-	ClaimTime            string                      `json:"claimTime"`
-	TaskDefinitionKey    string                      `json:"taskDefinitionKey"`
-	FormKey              string                      `json:"formKey"`
-	Priority             int                         `json:"priority"`
-	DueDate              string                      `json:"dueDate"`
-	ParentTaskId         string                      `json:"parentTaskId"`
-	Url                  string                      `json:"url"`
-	Variables            []variable.VariableResponse `json:"variables"`
-	TenantId             string                      `json:"tenantId"`
-	Category             string                      `json:"category"`
+	Id                   string              `json:"id"`
+	ProcessDefinitionId  string              `json:"processDefinitionId"`
+	ProcessDefinitionUrl string              `json:"processDefinitionUrl"`
+	ProcessInstanceId    string              `json:"processInstanceId"`
+	ProcessInstanceUrl   string              `json:"processInstanceUrl"`
+	ExecutionId          string              `json:"executionId"`
+	Name                 string              `json:"name"`
+	Description          string              `json:"description"`
+	DeleteReason         string              `json:"deleteReason"`
+	Owner                string              `json:"owner"`
+	Assignee             string              `json:"assignee"`
+	StartTime            string              `json:"startTime"`
+	EndTime              string              `json:"endTime"`
+	DurationInMillis     int                 `json:"durationInMillis"`
+	WorkTimeInMillis     int                 `json:"workTimeInMillis"`
+	ClaimTime            string              `json:"claimTime"`
+	TaskDefinitionKey    string              `json:"taskDefinitionKey"`
+	FormKey              string              `json:"formKey"`
+	Priority             int                 `json:"priority"`
+	DueDate              string              `json:"dueDate"`
+	ParentTaskId         string              `json:"parentTaskId"`
+	Url                  string              `json:"url"`
+	Variables            []variable.Variable `json:"variables"`
+	TenantId             string              `json:"tenantId"`
+	Category             string              `json:"category"`
 }
 
 // List 获取历史任务

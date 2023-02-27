@@ -10,11 +10,11 @@ import (
 )
 
 type HistoryVariableInstance struct {
-	Id                 string                    `json:"id"`
-	ProcessInstanceId  string                    `json:"processInstanceId"`
-	ProcessInstanceUrl string                    `json:"processInstanceUrl"`
-	TaskId             string                    `json:"taskId"`
-	Variable           variable.VariableResponse `json:"variable"`
+	Id                 string            `json:"id"`
+	ProcessInstanceId  string            `json:"processInstanceId"`
+	ProcessInstanceUrl string            `json:"processInstanceUrl"`
+	TaskId             string            `json:"taskId"`
+	Variable           variable.Variable `json:"variable"`
 }
 
 // List 获取流程历史变量

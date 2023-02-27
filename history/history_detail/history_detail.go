@@ -10,19 +10,19 @@ import (
 )
 
 type HistoryDetail struct {
-	Id                 string                    `json:"id"`
-	ProcessInstanceId  string                    `json:"processInstanceId"`
-	ProcessInstanceUrl string                    `json:"processInstanceUrl"`
-	ExecutionId        string                    `json:"executionId"`
-	ActivityInstanceId string                    `json:"activityInstanceId"`
-	TaskId             string                    `json:"taskId"`
-	TaskUrl            string                    `json:"taskUrl"`
-	Time               string                    `json:"time"`
-	DetailType         string                    `json:"detailType"`
-	Revision           string                    `json:"revision"`
-	PropertyId         string                    `json:"propertyId"`
-	PropertyValue      string                    `json:"propertyValue"`
-	Variable           variable.VariableResponse `json:"variable"`
+	Id                 string            `json:"id"`
+	ProcessInstanceId  string            `json:"processInstanceId"`
+	ProcessInstanceUrl string            `json:"processInstanceUrl"`
+	ExecutionId        string            `json:"executionId"`
+	ActivityInstanceId string            `json:"activityInstanceId"`
+	TaskId             string            `json:"taskId"`
+	TaskUrl            string            `json:"taskUrl"`
+	Time               string            `json:"time"`
+	DetailType         string            `json:"detailType"`
+	Revision           string            `json:"revision"`
+	PropertyId         string            `json:"propertyId"`
+	PropertyValue      string            `json:"propertyValue"`
+	Variable           variable.Variable `json:"variable"`
 }
 
 // List 获取流程历史变量
