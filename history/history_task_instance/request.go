@@ -39,10 +39,10 @@ type ListRequest struct {
 	DueDateAfter              *time.Time `json:"dueDateAfter,omitempty"`
 	DueDateBefore             *time.Time `json:"dueDateBefore,omitempty"`
 	WithoutDueDate            *bool      `json:"withoutDueDate,omitempty"`
-	TaskCompletedOn           *time.Time `json:"taskCompletedOn"`
+	TaskCompletedOn           *time.Time `json:"taskCompletedOn,omitempty"`
 	TaskCompletedAfter        *time.Time `json:"taskCompletedAfter,omitempty"`
 	TaskCompletedBefore       *time.Time `json:"taskCompletedBefore,omitempty"`
-	TaskCreatedOn             *time.Time `json:"taskCreatedOn"`
+	TaskCreatedOn             *time.Time `json:"taskCreatedOn,omitempty"`
 	TaskCreatedBefore         *time.Time `json:"taskCreatedBefore,omitempty"`
 	TaskCreatedAfter          *time.Time `json:"taskCreatedAfter,omitempty"`
 	IncludeTaskLocalVariables *bool      `json:"includeTaskLocalVariables,omitempty"`

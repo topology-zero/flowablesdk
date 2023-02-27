@@ -33,9 +33,9 @@ type HistoryProcessInstanceTask struct {
 	DueDate              string                      `json:"dueDate"`
 	ParentTaskId         string                      `json:"parentTaskId"`
 	Url                  string                      `json:"url"`
-	TaskVariables        []variable.VariableResponse `json:"taskVariables"`
-	ProcessVariables     []variable.VariableResponse `json:"processVariables"`
+	Variables            []variable.VariableResponse `json:"variables"`
 	TenantId             string                      `json:"tenantId"`
+	Category             string                      `json:"category"`
 }
 
 // List 获取历史任务

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"mime/multipart"
 	"net/http"
 	"strconv"
@@ -31,6 +32,9 @@ type Request struct {
 	body   io.Reader
 	header map[string]string
 	query  map[string]string
+
+	requestDebug  bool
+	responseDebug bool
 
 	client *http.Client
 }
@@ -75,6 +79,8 @@ func (r *Request) DoHttpRequest() ([]byte, error) {
 		}
 	}
 
+	r.RequestDebug(request)
+
 	response, err := r.client.Do(request)
 	if err != nil {
 		return nil, err
@@ -85,6 +91,8 @@ func (r *Request) DoHttpRequest() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	r.ResponseDebug(response.StatusCode, respStr)
 
 	if response.StatusCode >= 300 {
 		return nil, errors.New(fmt.Sprintf("status code = %d , response data = %s", response.StatusCode, string(respStr)))
@@ -112,10 +120,23 @@ func WithJson(body any) HTTPOption {
 		r.header["Content-Type"] = "application/json;charset=UTF-8"
 	}
 }
+
 func WithFromData(body map[string]any) HTTPOption {
 	return func(r *Request) {
 		r.body = strings.NewReader(Map2Str(body))
 		r.header["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8"
+	}
+}
+
+func WithRequestDebug() HTTPOption {
+	return func(r *Request) {
+		r.requestDebug = true
+	}
+}
+
+func WithResponseDebug() HTTPOption {
+	return func(r *Request) {
+		r.responseDebug = true
 	}
 }
 
@@ -173,4 +194,35 @@ func ConvertString(value any) string {
 	default:
 		return ""
 	}
+}
+
+func (r *Request) RequestDebug(request *http.Request) {
+	if !r.requestDebug {
+		return
+	}
+	if r.method == "GET" {
+		log.Println("query = ", request.URL.RawQuery)
+	} else {
+		ct := request.Header.Get("Content-Type")
+		if strings.HasPrefix(ct, "application/json") {
+			body, _ := ioutil.ReadAll(request.Body)
+			request.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+			log.Println("request = ", string(body))
+		} else if strings.HasPrefix(ct, "application/x-www-form-urlencoded") {
+			request.ParseForm()
+			log.Println("request = ", request.PostForm.Encode())
+		} else if strings.HasPrefix(ct, "multipart/form-data") {
+			request.ParseMultipartForm(10e6)
+			log.Println("request = ", request.PostForm.Encode())
+		} else {
+			log.Println("not debug , Content-Type = ", ct)
+		}
+	}
+}
+
+func (r *Request) ResponseDebug(code int, resp []byte) {
+	if !r.responseDebug {
+		return
+	}
+	log.Printf("code = [%d] reps = %s\n", code, string(resp))
 }
