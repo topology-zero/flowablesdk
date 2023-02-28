@@ -6,7 +6,7 @@ import (
 )
 
 type ListRequest struct {
-	common.ListCommonRequest
+	common.ListCommonRequest // order allow processInstanceId,variableName
 	common.WithTenant
 	ProcessInstanceId    string                           `json:"processInstanceId,omitempty"`
 	TaskId               string                           `json:"taskId,omitempty"`

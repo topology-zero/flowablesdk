@@ -5,7 +5,7 @@ import (
 )
 
 type ListRequest struct {
-	common.ListCommonRequest
+	common.ListCommonRequest // order allow activityId,activityName,activityType,duration,endTime,executionId,activityInstanceId,processDefinitionId,processInstanceId,startTime,tenantId
 	common.WithTenant
 	ActivityId          string `json:"activityId,omitempty"`
 	ActivityInstanceId  string `json:"activityInstanceId,omitempty"`

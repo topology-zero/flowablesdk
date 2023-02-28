@@ -3,7 +3,7 @@ package form_definition
 import "github.com/MasterJoyHunan/flowablesdk/common"
 
 type ListRequest struct {
-	common.ListCommonRequest
+	common.ListCommonRequest   // order allow id,key,category,name,version,deploymentId,tenantId
 	Category                   string
 	CategoryLike               string
 	CategoryNotEquals          string

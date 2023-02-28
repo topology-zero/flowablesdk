@@ -3,16 +3,16 @@ package form_instance
 import "github.com/MasterJoyHunan/flowablesdk/common"
 
 type ListRequest struct {
-	common.ListCommonRequest
-	Id                  string `json:"id,omitempty"`
-	FormDefinitionId    string `json:"formDefinitionId,omitempty"`
-	TaskId              string `json:"taskId,omitempty"`
-	ProcessInstanceId   string `json:"processInstanceId,omitempty"`
-	ProcessDefinitionId string `json:"processDefinitionId,omitempty"`
-	ScopeId             string `json:"scopeId,omitempty"`
-	ScopeType           string `json:"scopeType,omitempty"`
-	ScopeDefinitionId   string `json:"scopeDefinitionId,omitempty"`
-	SubmittedBy         string `json:"submittedBy,omitempty"`
+	common.ListCommonRequest        // order allow submittedDate,tenantId
+	Id                       string `json:"id,omitempty"`
+	FormDefinitionId         string `json:"formDefinitionId,omitempty"`
+	TaskId                   string `json:"taskId,omitempty"`
+	ProcessInstanceId        string `json:"processInstanceId,omitempty"`
+	ProcessDefinitionId      string `json:"processDefinitionId,omitempty"`
+	ScopeId                  string `json:"scopeId,omitempty"`
+	ScopeType                string `json:"scopeType,omitempty"`
+	ScopeDefinitionId        string `json:"scopeDefinitionId,omitempty"`
+	SubmittedBy              string `json:"submittedBy,omitempty"`
 	common.WithTenant
 }
 

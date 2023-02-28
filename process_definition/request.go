@@ -7,21 +7,21 @@ import (
 )
 
 type ListRequest struct {
-	common.ListCommonRequest
-	Version           int
-	Name              string
-	NameLike          string
-	Key               string
-	KeyLike           string
-	ResourceName      string
-	ResourceNameLike  string
-	Category          string
-	CategoryLike      string
-	CategoryNotEquals string
-	DeploymentId      string
-	StartableByUser   string
-	Latest            bool
-	Suspended         bool
+	common.ListCommonRequest // order allow id,key,category,name,version,deploymentId,tenantId
+	Version                  int
+	Name                     string
+	NameLike                 string
+	Key                      string
+	KeyLike                  string
+	ResourceName             string
+	ResourceNameLike         string
+	Category                 string
+	CategoryLike             string
+	CategoryNotEquals        string
+	DeploymentId             string
+	StartableByUser          string
+	Latest                   bool
+	Suspended                bool
 	common.WithTenant
 }
 

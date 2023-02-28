@@ -7,7 +7,7 @@ import (
 )
 
 type ListRequest struct {
-	common.ListCommonRequest
+	common.ListCommonRequest             // order allow deleteReason,duration,endTime,executionId,taskInstanceId,processDefinitionId,processInstanceId,start,assignee,taskDefinitionKey,description,dueDate,name,owner,priority,tenantId,startTime
 	TaskId                    string     `json:"taskId,omitempty"`
 	ProcessInstanceId         string     `json:"processInstanceId,omitempty"`
 	ProcessDefinitionKey      string     `json:"processDefinitionKey,omitempty"`

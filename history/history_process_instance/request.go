@@ -8,7 +8,7 @@ import (
 )
 
 type ListRequest struct {
-	common.ListCommonRequest
+	common.ListCommonRequest // order allow processInstanceId,processDefinitionId,businessKey,startTime,endTime,duration,tenantId
 	common.WithTenant
 	ProcessInstanceId       string                            `json:"processInstanceId,omitempty"`
 	ProcessDefinitionKey    string                            `json:"processDefinitionKey,omitempty"`

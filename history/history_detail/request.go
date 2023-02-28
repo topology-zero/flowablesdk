@@ -5,7 +5,7 @@ import (
 )
 
 type ListRequest struct {
-	common.ListCommonRequest
+	common.ListCommonRequest         // order allow processInstanceId,time,name,revision,variableType
 	Id                        string `json:"id,omitempty"`
 	ProcessInstanceId         string `json:"processInstanceId,omitempty"`
 	ExecutionId               string `json:"executionId,omitempty"`
@@ -13,4 +13,5 @@ type ListRequest struct {
 	TaskId                    string `json:"taskId,omitempty"`
 	SelectOnlyFormProperties  *bool  `json:"selectOnlyFormProperties,omitempty"`
 	SelectOnlyVariableUpdates *bool  `json:"selectOnlyVariableUpdates,omitempty"`
+	common.WithTenant
 }

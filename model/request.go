@@ -3,18 +3,18 @@ package model
 import "github.com/MasterJoyHunan/flowablesdk/common"
 
 type ListRequest struct {
-	common.ListCommonRequest
-	Id                string
-	Category          string
-	CategoryLike      string
-	CategoryNotEquals string
-	Name              string
-	NameLike          string
-	Key               string
-	DeploymentId      string
-	Version           string
-	LatestVersion     *bool
-	Deployed          *bool
+	common.ListCommonRequest // order allow id,category,createTime,key,lastUpdateTime,name,version,tenantId
+	Id                       string
+	Category                 string
+	CategoryLike             string
+	CategoryNotEquals        string
+	Name                     string
+	NameLike                 string
+	Key                      string
+	DeploymentId             string
+	Version                  string
+	LatestVersion            *bool
+	Deployed                 *bool
 	common.WithTenant
 }
 

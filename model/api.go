@@ -6,10 +6,8 @@ import (
 )
 
 const (
-	baseUrl        = "/repository/models"
-	detailUrl      = baseUrl + "/%s"
-	sourceUrl      = detailUrl + "/source"
-	extraSourceUrl = detailUrl + "/source-extra"
+	baseUrl   = "/repository/models"
+	detailUrl = baseUrl + "/%s"
 )
 
 var (
