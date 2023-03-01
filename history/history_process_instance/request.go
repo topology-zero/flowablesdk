@@ -1,9 +1,8 @@
 package history_process_instance
 
 import (
-	"time"
-
 	"github.com/MasterJoyHunan/flowablesdk/common"
+	"github.com/MasterJoyHunan/flowablesdk/pkg/timefmt"
 	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
@@ -30,10 +29,10 @@ type ListRequest struct {
 	Finished                          *bool                             `json:"finished,omitempty"`
 	SuperProcessInstanceId            string                            `json:"superProcessInstanceId,omitempty"`
 	ExcludeSubprocesses               *bool                             `json:"excludeSubprocesses,omitempty"`
-	FinishedAfter                     *time.Time                        `json:"finishedAfter,omitempty"`
-	FinishedBefore                    *time.Time                        `json:"finishedBefore,omitempty"`
-	StartedAfter                      *time.Time                        `json:"startedAfter,omitempty"`
-	StartedBefore                     *time.Time                        `json:"startedBefore,omitempty"`
+	FinishedAfter                     *timefmt.Time                     `json:"finishedAfter,omitempty"`
+	FinishedBefore                    *timefmt.Time                     `json:"finishedBefore,omitempty"`
+	StartedAfter                      *timefmt.Time                     `json:"startedAfter,omitempty"`
+	StartedBefore                     *timefmt.Time                     `json:"startedBefore,omitempty"`
 	StartedBy                         string                            `json:"startedBy,omitempty"`
 	IncludeProcessVariables           *bool                             `json:"includeProcessVariables,omitempty"`
 	CallbackId                        string                            `json:"callbackId,omitempty"`

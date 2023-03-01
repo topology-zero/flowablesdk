@@ -1,9 +1,8 @@
 package task
 
 import (
-	"time"
-
 	"github.com/MasterJoyHunan/flowablesdk/common"
+	"github.com/MasterJoyHunan/flowablesdk/pkg/timefmt"
 	"github.com/MasterJoyHunan/flowablesdk/variable"
 )
 
@@ -12,6 +11,7 @@ type ListRequest struct {
 	Name                           string                     `json:"name,omitempty"`
 	NameLike                       string                     `json:"nameLike,omitempty"`
 	Description                    string                     `json:"description,omitempty"`
+	DescriptionLike                string                     `json:"descriptionLike,omitempty"`
 	Priority                       int                        `json:"priority,omitempty"`
 	MinimumPriority                int                        `json:"minimumPriority,omitempty"`
 	MaximumPriority                int                        `json:"maximumPriority,omitempty"`
@@ -23,11 +23,11 @@ type ListRequest struct {
 	DelegationState                string                     `json:"delegationState,omitempty"`
 	CandidateUser                  string                     `json:"candidateUser,omitempty"`
 	CandidateGroup                 string                     `json:"candidateGroup,omitempty"`
-	CandidateGroups                string                     `json:"candidateGroups,omitempty"`
+	CandidateGroupIn               []string                   `json:"candidateGroupIn,omitempty"`
 	InvolvedUser                   string                     `json:"involvedUser,omitempty"`
+	ProcessInstanceId              string                     `json:"processInstanceId,omitempty"`
 	TaskDefinitionKey              string                     `json:"taskDefinitionKey,omitempty"`
 	TaskDefinitionKeyLike          string                     `json:"taskDefinitionKeyLike,omitempty"`
-	ProcessInstanceId              string                     `json:"processInstanceId,omitempty"`
 	ProcessInstanceBusinessKey     string                     `json:"processInstanceBusinessKey,omitempty"`
 	ProcessInstanceBusinessKeyLike string                     `json:"processInstanceBusinessKeyLike,omitempty"`
 	ProcessDefinitionId            string                     `json:"processDefinitionId,omitempty"`
@@ -36,13 +36,13 @@ type ListRequest struct {
 	ProcessDefinitionName          string                     `json:"processDefinitionName,omitempty"`
 	ProcessDefinitionNameLike      string                     `json:"processDefinitionNameLike,omitempty"`
 	ExecutionId                    string                     `json:"executionId,omitempty"`
-	CreatedOn                      *time.Time                 `json:"createdOn,omitempty"`
-	CreatedBefore                  *time.Time                 `json:"createdBefore,omitempty"`
-	CreatedAfter                   *time.Time                 `json:"createdAfter,omitempty"`
-	DueOn                          *time.Time                 `json:"dueOn,omitempty"`
-	DueBefore                      *time.Time                 `json:"dueBefore,omitempty"`
-	DueAfter                       *time.Time                 `json:"dueAfter,omitempty"`
-	WithoutDueDate                 *time.Time                 `json:"withoutDueDate,omitempty"`
+	CreatedOn                      *timefmt.Time              `json:"createdOn,omitempty"`
+	CreatedBefore                  *timefmt.Time              `json:"createdBefore,omitempty"`
+	CreatedAfter                   *timefmt.Time              `json:"createdAfter,omitempty"`
+	DueOn                          *timefmt.Time              `json:"dueOn,omitempty"`
+	DueBefore                      *timefmt.Time              `json:"dueBefore,omitempty"`
+	DueAfter                       *timefmt.Time              `json:"dueAfter,omitempty"`
+	WithoutDueDate                 *timefmt.Time              `json:"withoutDueDate,omitempty"`
 	ExcludeSubTasks                *bool                      `json:"excludeSubTasks,omitempty"`
 	Active                         *bool                      `json:"active,omitempty"`
 	IncludeTaskLocalVariables      *bool                      `json:"includeTaskLocalVariables,omitempty"`
