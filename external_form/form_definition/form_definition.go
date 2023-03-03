@@ -123,8 +123,8 @@ func Detail(formDefinitionId string) (resp FormDefinition, err error) {
 }
 
 // Model 查看表单外置的所有字段
-func Model(deploymentId string) (resp model.Model, err error) {
-	request := flowablesdk.GetRequest(ModelApi, deploymentId)
+func Model(formDefinitionId string) (resp model.Model, err error) {
+	request := flowablesdk.GetRequest(ModelApi, formDefinitionId)
 	data, err := request.DoHttpRequest()
 	if err != nil {
 		return
