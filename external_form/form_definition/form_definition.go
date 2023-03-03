@@ -88,7 +88,7 @@ func List(req ListRequest) (list []FormDefinition, count int, err error) {
 	}
 
 	if req.Latest {
-		query["Latest"] = "true"
+		query["latest"] = "true"
 	}
 
 	common.MakeCommonQuery(req.ListCommonRequest, req.WithTenant, query)

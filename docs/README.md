@@ -9,7 +9,7 @@
 ### 使用
 
 ```shell
-go install github.com/MasterJoyHunan/flowablesdk@v1.3.2
+go install github.com/MasterJoyHunan/flowablesdk@v1.3.3
 ```
 
 ### 前置要求 
