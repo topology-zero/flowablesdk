@@ -3,7 +3,7 @@ package model
 type Model struct {
 	Name                string        `json:"name,omitempty"`
 	Key                 string        `json:"key,omitempty"`
-	Version             string        `json:"version,omitempty"`
+	Version             int           `json:"version,omitempty"`
 	Description         string        `json:"description,omitempty"`
 	Url                 string        `json:"url,omitempty"`
 	Fields              []FormField   `json:"fields,omitempty"`
