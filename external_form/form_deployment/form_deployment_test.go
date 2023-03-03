@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/MasterJoyHunan/flowablesdk"
+	"github.com/MasterJoyHunan/flowablesdk/external_form/model"
 )
 
 const id = "54a0dca1-3f08-11ed-a7b8-38f3ab6b92c1"
@@ -30,35 +31,25 @@ func TestList(t *testing.T) {
 
 func TestAdd(t *testing.T) {
 	data, err := Add(AddRequest{
-		FileName: "test.form",
-		Category: "xxxxx",
-		Data: `{
-		"key": "form3",
-		"name": "请假2流程",
-		"fields": [
-					{
-					"id": "startTime",
-					"name": "开始时间1",
-					"type": "date",
-					"required": true,
-					"placeholder": "empty"
-					},
-					{
-					"id": "days",
-					"name": "请假天数1",
-					"type": "string",
-					"required": true,
-					"placeholder": "empty"
-					},
-					{
-					"id": "reason",
-					"name": "请假原因1",
-					"type": "text",
-					"required": true,
-					"placeholder": "empty"
-					}
-			]
-		}`,
+		FileName: "test1.form",
+		Data: model.Model{
+			Name: "请假2流程",
+			Key:  "form2",
+			Fields: []model.FormField{
+				{
+					Id:   "startTime",
+					Name: "开始时间1",
+				},
+				{
+					Id:   "days",
+					Name: "请假天数1",
+				},
+				{
+					Id:   "reason",
+					Name: "请假原因1",
+				},
+			},
+		},
 	})
 	if err != nil {
 		t.Error(err)

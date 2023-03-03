@@ -71,10 +71,11 @@ func List(req ListRequest) (list []FormDeployment, count int, err error) {
 // Add 添加外置表单
 func Add(req AddRequest) (resp FormDeployment, err error) {
 	request := flowablesdk.GetRequest(AddApi)
+	dataStr, _ := json.Marshal(req.Data)
 	request.With(httpclient.WithMultipartFrom(&httpclient.UploadFile{
 		Field:    "file",
 		FileName: req.FileName,
-		File:     strings.NewReader(req.Data),
+		File:     strings.NewReader(string(dataStr)),
 	}, map[string]string{
 		"tenantId": req.TenantId,
 		"category": req.Category,
