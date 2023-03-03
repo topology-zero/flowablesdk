@@ -8,7 +8,7 @@ import (
 const (
 	baseUrl   = "/form-repository/form-definitions"
 	detailUrl = baseUrl + "/%s"
-	modelUrl  = detailUrl + "/models"
+	modelUrl  = detailUrl + "/model"
 )
 
 var (
