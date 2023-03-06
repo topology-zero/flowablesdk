@@ -3,6 +3,7 @@ package process_instance
 import (
 	"encoding/json"
 	"errors"
+	"time"
 
 	"github.com/MasterJoyHunan/flowablesdk"
 	"github.com/MasterJoyHunan/flowablesdk/candidate"
@@ -12,13 +13,24 @@ import (
 )
 
 type ProcessInstance struct {
-	Id                   string `json:"id"`
-	Url                  string `json:"url"`
-	BusinessKey          string `json:"businessKey"`
-	Suspended            bool   `json:"suspended"`
-	ProcessDefinitionUrl string `json:"processDefinitionUrl"`
-	ActivityId           string `json:"activityId"`
-	TenantId             string `json:"tenantId"`
+	Id                           string              `json:"id"`
+	Url                          string              `json:"url"`
+	BusinessKey                  string              `json:"businessKey"`
+	Suspended                    bool                `json:"suspended"`
+	Ended                        bool                `json:"ended"`
+	ProcessDefinitionId          string              `json:"processDefinitionId"`
+	ProcessDefinitionUrl         string              `json:"processDefinitionUrl"`
+	ProcessDefinitionName        string              `json:"processDefinitionName"`
+	ProcessDefinitionDescription string              `json:"processDefinitionDescription"`
+	ActivityId                   string              `json:"activityId"`
+	StartUserId                  string              `json:"startUserId"`
+	StartTime                    time.Time           `json:"startTime"`
+	Variables                    []variable.Variable `json:"variables"`
+	CallbackId                   string              `json:"callbackId"`
+	CallbackType                 string              `json:"callbackType"`
+	ReferenceId                  string              `json:"referenceId"`
+	ReferenceType                string              `json:"referenceType"`
+	TenantId                     string              `json:"tenantId"`
 }
 
 // List 返回所有流程实例

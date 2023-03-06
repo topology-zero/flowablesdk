@@ -1,6 +1,7 @@
 package task_form
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
 
@@ -12,15 +13,16 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-const id = "2a0c185b-b80b-11ed-ac5d-38f3ab6b92c1"
+const id = "728fd533-b9c8-11ed-ac5d-38f3ab6b92c1"
 
 func TestGetForm(t *testing.T) {
-	str, err := GetForm(id)
+	data, err := GetForm(id)
 
 	if err != nil {
 		t.Error(err)
 		return
 	}
 
-	fmt.Println(string(str))
+	jsonStr, _ := json.MarshalIndent(&data, "", "    ")
+	fmt.Println(string(jsonStr))
 }

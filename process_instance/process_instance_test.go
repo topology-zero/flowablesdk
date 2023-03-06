@@ -86,7 +86,6 @@ func TestStart(t *testing.T) {
 		ProcessDefinitionKey: "holidayRequest",
 		Message:              "",
 		BusinessKey:          "myBusinessKey",
-		ReturnVariables:      false,
 		Variables:            nil,
 	})
 	if err != nil {

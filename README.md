@@ -11,7 +11,7 @@
 ### 使用
 
 ```shell
-go install github.com/MasterJoyHunan/flowablesdk@v1.3.5
+go install github.com/MasterJoyHunan/flowablesdk@v1.3.6
 ```
 
 ### 前置要求

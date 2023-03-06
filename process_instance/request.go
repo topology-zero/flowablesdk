@@ -25,11 +25,15 @@ type UpdateRequest struct {
 }
 
 type StartProcessRequest struct {
-	ProcessDefinitionId  string                     `json:"processDefinitionId,omitempty"` // ProcessDefinitionId | ProcessDefinitionKey | Message 三选一
-	ProcessDefinitionKey string                     `json:"processDefinitionKey,omitempty"`
-	Message              string                     `json:"message,omitempty"`
-	TenantId             string                     `json:"tenantId,omitempty"`
-	BusinessKey          string                     `json:"businessKey"`
-	ReturnVariables      bool                       `json:"returnVariables"`
-	Variables            []variable.VariableRequest `json:"variable,omitempty"`
+	ProcessDefinitionId        string                     `json:"processDefinitionId,omitempty"`
+	ProcessDefinitionKey       string                     `json:"processDefinitionKey,omitempty"`
+	Message                    string                     `json:"message,omitempty"`
+	Name                       string                     `json:"name,omitempty"`
+	BusinessKey                string                     `json:"businessKey,omitempty"`
+	Variables                  []variable.VariableRequest `json:"variables,omitempty"`
+	TransientVariables         []variable.VariableRequest `json:"transientVariables,omitempty"`
+	StartFormVariables         []variable.VariableRequest `json:"startFormVariables,omitempty"`
+	TenantId                   string                     `json:"tenantId,omitempty"`
+	Outcome                    string                     `json:"outcome,omitempty"`
+	OverrideDefinitionTenantId string                     `json:"overrideDefinitionTenantId,omitempty"`
 }
