@@ -82,9 +82,7 @@ func Create(req CreateRequest) (resp Deployment, err error) {
 		Field:    "file",
 		FileName: req.FileName,
 		File:     strings.NewReader(req.Xml),
-	}, map[string]string{
-		"category": req.Category,
-	})).DoHttpRequest()
+	}, nil)).DoHttpRequest()
 	if err != nil {
 		return
 	}

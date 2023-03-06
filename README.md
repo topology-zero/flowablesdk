@@ -11,7 +11,7 @@
 ### 使用
 
 ```shell
-go install github.com/topology-zero/flowablesdk@v1.3.8
+go install github.com/topology-zero/flowablesdk@v1.3.9
 ```
 
 ### 前置要求
