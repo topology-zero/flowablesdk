@@ -1,8 +1,8 @@
 package form_deployment
 
 import (
-	"github.com/MasterJoyHunan/flowablesdk/common"
-	"github.com/MasterJoyHunan/flowablesdk/external_form/model"
+	"github.com/topology-zero/flowablesdk/common"
+	"github.com/topology-zero/flowablesdk/external_form/model"
 )
 
 type ListRequest struct {

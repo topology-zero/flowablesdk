@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/MasterJoyHunan/flowablesdk"
-	"github.com/MasterJoyHunan/flowablesdk/variable"
+	"github.com/topology-zero/flowablesdk"
+	"github.com/topology-zero/flowablesdk/variable"
 )
 
 func TestMain(m *testing.M) {

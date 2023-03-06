@@ -1,8 +1,8 @@
 package history_detail
 
 import (
-	"github.com/MasterJoyHunan/flowablesdk"
-	"github.com/MasterJoyHunan/flowablesdk/pkg/httpclient"
+	"github.com/topology-zero/flowablesdk"
+	"github.com/topology-zero/flowablesdk/pkg/httpclient"
 )
 
 const (

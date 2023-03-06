@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/MasterJoyHunan/flowablesdk"
-	"github.com/MasterJoyHunan/flowablesdk/comment"
+	"github.com/topology-zero/flowablesdk"
+	"github.com/topology-zero/flowablesdk/comment"
 )
 
 const (

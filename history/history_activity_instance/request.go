@@ -1,7 +1,7 @@
 package history_activity_instance
 
 import (
-	"github.com/MasterJoyHunan/flowablesdk/common"
+	"github.com/topology-zero/flowablesdk/common"
 )
 
 type ListRequest struct {

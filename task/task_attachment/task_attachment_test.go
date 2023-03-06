@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/MasterJoyHunan/flowablesdk"
-	"github.com/MasterJoyHunan/flowablesdk/attachment"
+	"github.com/topology-zero/flowablesdk"
+	"github.com/topology-zero/flowablesdk/attachment"
 )
 
 //go:embed _js3.png

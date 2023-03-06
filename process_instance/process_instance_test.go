@@ -7,9 +7,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/MasterJoyHunan/flowablesdk"
-	"github.com/MasterJoyHunan/flowablesdk/candidate"
-	"github.com/MasterJoyHunan/flowablesdk/variable"
+	"github.com/topology-zero/flowablesdk"
+	"github.com/topology-zero/flowablesdk/candidate"
+	"github.com/topology-zero/flowablesdk/variable"
 )
 
 //go:embed js.png
