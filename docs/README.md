@@ -9,7 +9,7 @@
 ### 使用
 
 ```shell
-go install github.com/topology-zero/flowablesdk@v1.3.9
+go get -v github.com/topology-zero/flowablesdk@v1.3.9
 ```
 
 ### 前置要求 
@@ -33,8 +33,8 @@ go install github.com/topology-zero/flowablesdk@v1.3.9
 ### 配套项目
 
 - [spring-boot + flowable 项目](https://github.com/topology-zero/flowable-rest)
-- [后台管理UI]()
-- [后台管理接口]()
+- [后台管理UI](https://github.com/topology-zero/go-flowable-vue)
+- [后台管理接口](https://github.com/topology-zero/go-flowable-admin)
 
 ### 联系
 
